@@ -153,7 +153,7 @@ public class ImageAdapter extends BaseAdapter
 				selectedUris.add(uris.get(position));
 			}
 			setChecked(position, isChecked);
-			if (selectedUris.size() > 0) {
+			if (selectedUris.isEmpty()) {
 				btnDelete.setEnabled(true);
 			} else {
 				btnDelete.setEnabled(false);
