@@ -610,8 +610,10 @@ public class CamFragment extends Fragment implements View.OnClickListener {
 			// Camera in use or does not exist
 			LOG.debug("Error: keine Kamera bekommen: " + ex.getMessage());
 		}
-		LOG.debug("camera opened");
-		LOG.debug("Camera = " + c.toString());
+		if (c != null) {
+			LOG.debug("camera opened");
+			LOG.debug("Camera = " + c.toString());
+		}
 		return c;
 	}
 
