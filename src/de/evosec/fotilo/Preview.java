@@ -166,22 +166,20 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
 			            touchRect.bottom * 2000 / this.getHeight() - 1000);
 
 			doTouchFocus(targetFocusRect);
-			if (true) {// drawingViewSet) { //TODO
-				drawingView.setHaveTouch(true, touchRect);
-				drawingView.invalidate();
 
-				// Remove the square indicator after 1000 msec
-				Handler handler = new Handler();
-				handler.postDelayed(new Runnable() {
+			drawingView.setHaveTouch(true, touchRect);
+			drawingView.invalidate();
 
-					@Override
-					public void run() {
-						drawingView.setHaveTouch(false, new Rect(0, 0, 0, 0));
-						drawingView.invalidate();
-					}
-				}, 1000);
-			}
+			// Remove the square indicator after 1000 msec
+			Handler handler = new Handler();
+			handler.postDelayed(new Runnable() {
 
+				@Override
+				public void run() {
+					drawingView.setHaveTouch(false, new Rect(0, 0, 0, 0));
+					drawingView.invalidate();
+				}
+			}, 1000);
 		}
 
 		return false;
