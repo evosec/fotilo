@@ -440,8 +440,9 @@ public class CamFragment extends Fragment implements View.OnClickListener {
 			// nächst größere Auflösung suchen
 			if (supportedSize.width >= w && supportedSize.height >= h) {
 				// Pythagoras
-				tempDiff = Math.sqrt(Math.pow(supportedSize.width - w, 2)
-				        + Math.pow(supportedSize.height - h, 2));
+				tempDiff = Math
+				    .sqrt(Math.pow((double) supportedSize.width - w, 2)
+				            + Math.pow((double) supportedSize.height - h, 2));
 				// minimalste Differenz suchen
 				if (tempDiff < diff) {
 					diff = tempDiff;
