@@ -533,29 +533,29 @@ public class CamFragment extends Fragment implements View.OnClickListener {
 	}
 
 	private void updateFlashModeIcon() {
-		ImageButton btn_flashmode =
+		ImageButton btnFlashmode =
 		        (ImageButton) getView().findViewById(R.id.btn_flashmode);
 		if (camera.getParameters().getSupportedFlashModes() != null) {
 			switch (camera.getParameters().getFlashMode()) {
 			case Camera.Parameters.FLASH_MODE_AUTO:
-				btn_flashmode
+				btnFlashmode
 				    .setImageResource(R.drawable.ic_flash_auto_black_24dp);
 				break;
 			case Camera.Parameters.FLASH_MODE_ON:
-				btn_flashmode
+				btnFlashmode
 				    .setImageResource(R.drawable.ic_flash_on_black_24dp);
 				break;
 			case Camera.Parameters.FLASH_MODE_OFF:
-				btn_flashmode
+				btnFlashmode
 				    .setImageResource(R.drawable.ic_flash_off_black_24dp);
 				break;
 			case Camera.Parameters.FLASH_MODE_RED_EYE:
-				btn_flashmode
+				btnFlashmode
 				    .setImageResource(R.drawable.ic_remove_red_eye_black_24dp);
 				break;
 			}
 		} else {
-			btn_flashmode.setVisibility(View.INVISIBLE);
+			btnFlashmode.setVisibility(View.INVISIBLE);
 		}
 	}
 
