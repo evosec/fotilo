@@ -68,6 +68,7 @@ public class ReviewPicturesActivity extends AppCompatActivity
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
 			returnPictures(Activity.RESULT_OK);
+			break;
 		default:
 			break;
 		}
