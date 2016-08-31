@@ -57,8 +57,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
 				camera.autoFocus(autoFocusCallback);
 			}
 		} catch (IOException e) {
-			Log.d("PREVIEW",
-			    "Error setting camera preview: " + e.getStackTrace());
+			Log.d("PREVIEW", "Error setting camera preview: " + e.getMessage());
 		}
 	}
 
@@ -122,8 +121,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
 			camera.setPreviewDisplay(holder);
 			camera.startPreview();
 		} catch (IOException e) {
-			Log.d("PREVIEW",
-			    "Error setting camera preview: " + e.getStackTrace());
+			Log.d("PREVIEW", "Error setting camera preview: " + e.getMessage());
 		}
 	}
 
