@@ -231,6 +231,8 @@ public class CamFragment extends Fragment implements View.OnClickListener {
 					getView().findViewById(R.id.radio_flashmode_redEye)
 					    .setVisibility(View.VISIBLE);
 					break;
+				default:
+					break;
 				}
 			}
 			setDefaultFlashmode();
@@ -261,6 +263,8 @@ public class CamFragment extends Fragment implements View.OnClickListener {
 				    .findViewById(R.id.radio_flashmode_redEye))
 				        .setChecked(true);
 				break;
+			default:
+				break;
 			}
 		}
 	}
@@ -279,6 +283,8 @@ public class CamFragment extends Fragment implements View.OnClickListener {
 			break;
 		case R.id.radio_flashmode_redEye:
 			flashMode = Camera.Parameters.FLASH_MODE_RED_EYE;
+			break;
+		default:
 			break;
 		}
 		Camera.Parameters params = camera.getParameters();
