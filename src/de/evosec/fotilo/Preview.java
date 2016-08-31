@@ -154,10 +154,13 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
 			float x = event.getX();
 			float y = event.getY();
 
-			Rect touchRect = new Rect(BigDecimal.valueOf(x - 100).intValue(),
-			    BigDecimal.valueOf(y - 100).intValue(),
-			    BigDecimal.valueOf(x + 100).intValue(),
-			    BigDecimal.valueOf(y + 100).intValue());
+			BigDecimal oneHundred = BigDecimal.valueOf(100);
+
+			Rect touchRect = new Rect(
+			    BigDecimal.valueOf(x).subtract(oneHundred).intValue(),
+			    BigDecimal.valueOf(y).subtract(oneHundred).intValue(),
+			    BigDecimal.valueOf(x).add(oneHundred).intValue(),
+			    BigDecimal.valueOf(y).add(oneHundred).intValue());
 
 			final Rect targetFocusRect =
 			        new Rect(touchRect.left * 2000 / this.getWidth() - 1000,
