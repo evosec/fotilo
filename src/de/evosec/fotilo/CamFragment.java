@@ -68,6 +68,21 @@ public class CamFragment extends Fragment
 	private ProgressDialog progress;
 	private boolean safeToTakePicture = false;
 
+	public CamFragment() {
+		// Required empty public constructor
+	}
+
+	/**
+	 * Use this factory method to create a new instance of this fragment using
+	 * the provided parameters.
+	 *
+	 * @return A new instance of fragment CamFragment.
+	 */
+	// TODO: Rename and change types and number of parameters
+	public static CamFragment newInstance() {
+		return new CamFragment();
+	}
+
 	@Override
 	public void onPictureTaken(byte[] data, Camera camera) {
 		// wenn maxPictures noch nicht erreicht
@@ -613,22 +628,6 @@ public class CamFragment extends Fragment
 			LOG.debug("Camera = " + c.toString());
 		}
 		return c;
-	}
-
-	public CamFragment() {
-		// Required empty public constructor
-	}
-
-	/**
-	 * Use this factory method to create a new instance of this fragment using
-	 * the provided parameters.
-	 *
-	 * @return A new instance of fragment CamFragment.
-	 */
-	// TODO: Rename and change types and number of parameters
-	public static CamFragment newInstance() {
-		CamFragment fragment = new CamFragment();
-		return fragment;
 	}
 
 	@Override
