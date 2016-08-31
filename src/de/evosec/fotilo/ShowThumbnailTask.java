@@ -38,7 +38,7 @@ public class ShowThumbnailTask extends AsyncTask<Uri, Void, Bitmap> {
 		try {
 			bm = getThumbnail(uris[0]);
 		} catch (IOException e) {
-			LOG.debug(e.getMessage());
+			LOG.debug("" + e);
 		}
 		return bm;
 	}
