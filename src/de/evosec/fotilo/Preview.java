@@ -76,11 +76,6 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
 		final int height =
 		        resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec);
 		setMeasuredDimension(width, height);
-
-		/*
-		 * if (mSupportedPreviewSizes != null) { mPreviewSize =
-		 * getOptimalPreviewSize(mSupportedPreviewSizes, width, height); }
-		 */
 	}
 
 	@Override
