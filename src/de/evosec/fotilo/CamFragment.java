@@ -78,7 +78,6 @@ public class CamFragment extends Fragment
 	 *
 	 * @return A new instance of fragment CamFragment.
 	 */
-	// TODO: Rename and change types and number of parameters
 	public static CamFragment newInstance() {
 		return new CamFragment();
 	}
@@ -808,7 +807,6 @@ public class CamFragment extends Fragment
 	 */
 	public interface OnFragmentInteractionListener {
 
-		// TODO: Update argument type and name
 		void onFragmentInteraction(Uri uri);
 	}
 }
