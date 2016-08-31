@@ -1,6 +1,5 @@
 package de.evosec.fotilo;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -48,8 +47,7 @@ public class ShowThumbnailTask extends AsyncTask<Uri, Void, Bitmap> {
 		pictureReview.setImageBitmap(result);
 	}
 
-	private Bitmap getThumbnail(Uri uri)
-	        throws FileNotFoundException, IOException {
+	private Bitmap getThumbnail(Uri uri) throws IOException {
 		InputStream input = contentResolver.openInputStream(uri);
 		BitmapFactory.Options onlyBoundsOptions = new BitmapFactory.Options();
 		onlyBoundsOptions.inJustDecodeBounds = true;
