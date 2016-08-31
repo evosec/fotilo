@@ -734,14 +734,8 @@ public class CamFragment extends Fragment implements View.OnClickListener {
 			zoomOut();
 			break;
 		case R.id.radio_flashmode_auto:
-			this.onRadioButtonClicked(v);
-			break;
 		case R.id.radio_flashmode_off:
-			this.onRadioButtonClicked(v);
-			break;
 		case R.id.radio_flashmode_on:
-			this.onRadioButtonClicked(v);
-			break;
 		case R.id.radio_flashmode_redEye:
 			this.onRadioButtonClicked(v);
 			break;
