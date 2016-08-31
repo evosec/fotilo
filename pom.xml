@@ -107,6 +107,7 @@
                         <platform>23</platform>
                     </sdk>
                     <resourceDirectory>${project.basedir}/res</resourceDirectory>
+                    <failOnNonStandardStructure>false</failOnNonStandardStructure>
                     <!-- Skip lint since it never exits -->
                     <lintSkip>true</lintSkip>
                 </configuration>
