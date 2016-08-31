@@ -89,6 +89,9 @@
                 <artifactId>android-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
+                    <sdk>
+                        <platform>23</platform>
+                    </sdk>
                     <resourceDirectory>${project.basedir}/res</resourceDirectory>
                     <!-- Skip lint since it never exits -->
                     <lintSkip>true</lintSkip>
