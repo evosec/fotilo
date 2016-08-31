@@ -800,6 +800,8 @@ public class CamFragment extends Fragment implements View.OnClickListener {
 				}
 			}
 			break;
+		default:
+			break;
 		}
 	}
 
