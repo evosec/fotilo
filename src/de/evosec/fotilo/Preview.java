@@ -5,13 +5,15 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import android.content.Context;
 import android.graphics.Rect;
 import android.hardware.Camera;
 import android.hardware.Camera.Area;
 import android.hardware.Camera.AutoFocusCallback;
 import android.os.Handler;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -22,6 +24,8 @@ import android.widget.FrameLayout;
  * Created by Christian on 19.02.2016.
  */
 public class Preview extends SurfaceView implements SurfaceHolder.Callback {
+
+	private static final Logger LOG = LoggerFactory.getLogger(Preview.class);
 
 	private final SurfaceHolder surfaceHolder;
 	private Camera camera;
@@ -58,7 +62,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
 				camera.autoFocus(autoFocusCallback);
 			}
 		} catch (IOException e) {
-			Log.d("PREVIEW", "Error setting camera preview: " + e.getMessage());
+			LOG.debug("Error setting camera preview: " + e);
 		}
 	}
 
@@ -116,13 +120,13 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 	        int height) {
-		Log.d("MyCam", "surfaceChanged()");
+		LOG.debug("surfaceChanged()");
 		try {
 			requestLayout();
 			camera.setPreviewDisplay(holder);
 			camera.startPreview();
 		} catch (IOException e) {
-			Log.d("PREVIEW", "Error setting camera preview: " + e.getMessage());
+			LOG.debug("Error setting camera preview: " + e);
 		}
 	}
 
@@ -143,8 +147,8 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
 
 			camera.autoFocus(autoFocusCallback);
 		} catch (Exception e) {
-			Log.d("MyCam", e.getMessage());
-			Log.d("MyCam", "Autofokus nicht möglich");
+			LOG.debug("" + e);
+			LOG.debug("Autofokus nicht möglich");
 		}
 	}
 
