@@ -22,9 +22,9 @@ public class ReviewPicturesActivity extends AppCompatActivity
 	        LoggerFactory.getLogger(ReviewPicturesActivity.class);
 
 	private ArrayList<String> pictureUris;
-	private Button btn_ok;
-	private Button btn_delete;
-	private Button btn_fertig;
+	private Button btnOk;
+	private Button btnDelete;
+	private Button btnFertig;
 	private ImageAdapter imageAdapter;
 
 	@Override
@@ -34,14 +34,14 @@ public class ReviewPicturesActivity extends AppCompatActivity
 		Bundle bundle = getIntent().getBundleExtra("data");
 		pictureUris = bundle.getStringArrayList("pictures");
 		final GridView pictureGrid = (GridView) findViewById(R.id.pictureGrid);
-		this.btn_delete = (Button) findViewById(R.id.btn_delete);
-		this.btn_ok = (Button) findViewById(R.id.btn_ok);
-		this.btn_fertig = (Button) findViewById(R.id.btn_fertig);
-		btn_delete.setOnClickListener(this);
-		btn_ok.setOnClickListener(this);
-		btn_fertig.setOnClickListener(this);
+		this.btnDelete = (Button) findViewById(R.id.btn_delete);
+		this.btnOk = (Button) findViewById(R.id.btn_ok);
+		this.btnFertig = (Button) findViewById(R.id.btn_fertig);
+		btnDelete.setOnClickListener(this);
+		btnOk.setOnClickListener(this);
+		btnFertig.setOnClickListener(this);
 		imageAdapter = new ImageAdapter(this, getContentResolver(), pictureUris,
-		    btn_delete);
+		    btnDelete);
 		pictureGrid.setAdapter(imageAdapter);
 		pictureGrid.setOnItemClickListener(imageAdapter);
 	}
