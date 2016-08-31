@@ -108,16 +108,15 @@ public class CamFragment extends Fragment implements View.OnClickListener {
 					        camera.startPreview();
 					        safeToTakePicture = true;
 				        } catch (FileNotFoundException e) {
-					        LOG.debug("File not found: " + e.getMessage());
+					        LOG.debug("File not found: " + e);
 				        } catch (IOException e) {
-					        LOG.debug(
-					            "Error accessing file: " + e.getMessage());
+					        LOG.debug("Error accessing file: " + e);
 				        } finally {
 					        if (fos != null) {
 						        try {
 							        fos.close();
 						        } catch (IOException e) {
-							        LOG.debug(e.getMessage());
+							        LOG.debug("" + e);
 						        }
 					        }
 					        progress.dismiss();
@@ -154,7 +153,7 @@ public class CamFragment extends Fragment implements View.OnClickListener {
 		try {
 			intent.setData(imageUri);
 		} catch (Exception e) {
-			LOG.debug(e.getMessage());
+			LOG.debug("" + e);
 		}
 		getActivity().sendBroadcast(intent);
 	}
