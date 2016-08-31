@@ -373,11 +373,10 @@ public class CamFragment extends Fragment implements View.OnClickListener {
 		largestSize.height = 0;
 		for (Camera.Size size : sizes) {
 			double ratio = (double) size.width / (double) size.height;
-			if (Math.abs(ratio - aspectRatio) < 0.00000001) {
-				if (size.width >= largestSize.width
-				        && size.height >= largestSize.height) {
-					largestSize = size;
-				}
+			if (Math.abs(ratio - aspectRatio) < 0.00000001
+			        && size.width >= largestSize.width
+			        && size.height >= largestSize.height) {
+				largestSize = size;
 			}
 		}
 		return largestSize;
