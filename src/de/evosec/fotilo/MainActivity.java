@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
 	@Override
 	public void onRequestPermissionsResult(int requestCode,
-	        String permissions[], int[] grantResults) {
+	        String[] permissions, int[] grantResults) {
 		LOG.debug("Permission callback called-------");
 		switch (requestCode) {
 		case REQUEST_ID_MULTIPLE_PERMISSIONS: {
