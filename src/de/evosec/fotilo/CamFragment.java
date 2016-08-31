@@ -309,8 +309,6 @@ public class CamFragment extends Fragment implements View.OnClickListener {
 		// Ausgewählte Auflösung von rufender Activity einstellen
 		Intent i = getActivity().getIntent();
 		Camera.Parameters params = camera.getParameters();
-		List<Camera.Size> supportedPictureSizes =
-		        params.getSupportedPictureSizes();
 		int w = 0;
 		int h = 0;
 		double ratio = 0;
