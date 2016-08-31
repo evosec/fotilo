@@ -663,12 +663,12 @@ public class CamFragment extends Fragment implements View.OnClickListener {
 		LOG.debug("onCreateView()");
 		LOG.debug("CamFragment");
 		View view = inflater.inflate(R.layout.fragment_cam, container, false);
-		ImageButton btn_flashmode =
+		ImageButton btnFlashmode =
 		        (ImageButton) view.findViewById(R.id.btn_flashmode);
-		btn_flashmode.setOnClickListener(this);
-		ImageButton btn_capture =
+		btnFlashmode.setOnClickListener(this);
+		ImageButton btnCapture =
 		        (ImageButton) view.findViewById(R.id.btn_capture);
-		btn_capture.setOnClickListener(this);
+		btnCapture.setOnClickListener(this);
 		ImageButton btnZoomin = (ImageButton) view.findViewById(R.id.btnZoomIn);
 		btnZoomin.setOnClickListener(this);
 		ImageButton btnZoomOut =
