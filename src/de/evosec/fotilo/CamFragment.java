@@ -553,6 +553,8 @@ public class CamFragment extends Fragment implements View.OnClickListener {
 				btnFlashmode
 				    .setImageResource(R.drawable.ic_remove_red_eye_black_24dp);
 				break;
+			default:
+				break;
 			}
 		} else {
 			btnFlashmode.setVisibility(View.INVISIBLE);
