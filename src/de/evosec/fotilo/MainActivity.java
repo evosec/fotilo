@@ -63,81 +63,84 @@ public class MainActivity extends AppCompatActivity {
 	        String[] permissions, int[] grantResults) {
 		LOG.debug("Permission callback called-------");
 		switch (requestCode) {
-		case REQUEST_ID_MULTIPLE_PERMISSIONS: {
-
-			Map<String, Integer> perms = new HashMap<>();
-			// Initialize the map with both permissions
-			perms.put(Manifest.permission.CAMERA,
-			    PackageManager.PERMISSION_GRANTED);
-			perms.put(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-			    PackageManager.PERMISSION_GRANTED);
-			// Fill with actual results from user
-			if (grantResults.length > 0) {
-				for (int i = 0; i < permissions.length; i++) {
-					perms.put(permissions[i], grantResults[i]);
-				}
-				// Check for both permissions
-				if (perms.get(
-				    Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
-				        && perms.get(
-				            Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-					LOG.debug(
-					    "camera & writeExternalStorage permission granted");
-					// process the normal flow
-					startCameraFragment();
-					// else any one or both the permissions are not granted
-				} else {
-					LOG.debug("Some permissions are not granted ask again ");
-					// permission is denied (this is the first time, when "never
-					// ask again" is not checked) so ask again explaining the
-					// usage of permission
-					// shouldShowRequestPermissionRationale will return true
-					// show the dialog or snackbar saying its necessary and try
-					// again otherwise proceed with setup.
-					if (ActivityCompat.shouldShowRequestPermissionRationale(
-					    this, Manifest.permission.CAMERA) || ActivityCompat
-					        .shouldShowRequestPermissionRationale(this,
-					            Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-						showMessageOKCancel(
-						    "Kamera- und Speicherkartenzugriff sind für diese App notwendig!",
-						    new DialogInterface.OnClickListener() {
-
-							    @Override
-							    public void onClick(DialogInterface dialog,
-							            int which) {
-								    switch (which) {
-								    case DialogInterface.BUTTON_POSITIVE:
-									    if (checkAndRequestPermissions()) {
-										    startCameraFragment();
-									    }
-									    break;
-								    case DialogInterface.BUTTON_NEGATIVE:
-									    // proceed with logic by disabling the
-									    // related features or quit the app.
-									    finish();
-									    break;
-								    }
-							    }
-						    });
-					}
-					// permission is denied (and never ask again is checked)
-					// shouldShowRequestPermissionRationale will return false
-					else {
-						Toast.makeText(this,
-						    "Go to settings and enable permissions",
-						    Toast.LENGTH_LONG).show();
-						// proceed with logic by disabling the related features
-						// or quit the app.
-						finish();
-					}
-				}
-			}
+		case REQUEST_ID_MULTIPLE_PERMISSIONS:
+			handleMultiplePermissionsRequest(requestCode, permissions,
+			    grantResults);
 			break;
-		}
 		default:
 			break;
 		}
+	}
 
+	private void handleMultiplePermissionsRequest(int requestCode,
+	        String[] permissions, int[] grantResults) {
+		Map<String, Integer> perms = new HashMap<>();
+		// Initialize the map with both permissions
+		perms.put(Manifest.permission.CAMERA,
+		    PackageManager.PERMISSION_GRANTED);
+		perms.put(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+		    PackageManager.PERMISSION_GRANTED);
+		// Fill with actual results from user
+		if (grantResults.length > 0) {
+			for (int i = 0; i < permissions.length; i++) {
+				perms.put(permissions[i], grantResults[i]);
+			}
+			// Check for both permissions
+			if (perms.get(
+			    Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+			        && perms.get(
+			            Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+				LOG.debug("camera & writeExternalStorage permission granted");
+				// process the normal flow
+				startCameraFragment();
+				// else any one or both the permissions are not granted
+			} else {
+				LOG.debug("Some permissions are not granted ask again ");
+				// permission is denied (this is the first time, when "never
+				// ask again" is not checked) so ask again explaining the
+				// usage of permission
+				// shouldShowRequestPermissionRationale will return true
+				// show the dialog or snackbar saying its necessary and try
+				// again otherwise proceed with setup.
+				if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+				    Manifest.permission.CAMERA)
+				        || ActivityCompat.shouldShowRequestPermissionRationale(
+				            this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+					showMessageOKCancel(
+					    "Kamera- und Speicherkartenzugriff sind für diese App notwendig!",
+					    new DialogInterface.OnClickListener() {
+
+						    @Override
+						    public void onClick(DialogInterface dialog,
+						            int which) {
+							    switch (which) {
+							    case DialogInterface.BUTTON_POSITIVE:
+								    if (checkAndRequestPermissions()) {
+									    startCameraFragment();
+								    }
+								    break;
+							    case DialogInterface.BUTTON_NEGATIVE:
+								    // proceed with logic by disabling the
+								    // related features or quit the app.
+								    finish();
+								    break;
+							    }
+						    }
+					    });
+				}
+				// permission is denied (and never ask again is checked)
+				// shouldShowRequestPermissionRationale will return false
+				else {
+					Toast
+					    .makeText(this, "Go to settings and enable permissions",
+					        Toast.LENGTH_LONG)
+					    .show();
+					// proceed with logic by disabling the related features
+					// or quit the app.
+					finish();
+				}
+			}
+		}
 	}
 
 	private void showMessageOKCancel(String message,
