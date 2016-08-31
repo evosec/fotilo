@@ -46,7 +46,8 @@ import android.widget.Toast;
  * {@link CamFragment#newInstance} factory method to create an instance of this
  * fragment.
  */
-public class CamFragment extends Fragment implements View.OnClickListener {
+public class CamFragment extends Fragment
+        implements View.OnClickListener, Camera.PictureCallback {
 
 	private static final Logger LOG =
 	        LoggerFactory.getLogger(CamFragment.class);
@@ -66,72 +67,65 @@ public class CamFragment extends Fragment implements View.OnClickListener {
 	private int currentZoomLevel;
 	private ProgressDialog progress;
 	private boolean safeToTakePicture = false;
-	private final Camera.PictureCallback pictureCallback =
-	        new Camera.PictureCallback() {
 
-		        @Override
-		        public void onPictureTaken(byte[] data, Camera camera) {
-			        // wenn maxPictures noch nicht erreicht
-			        if (picturesTaken < maxPictures || maxPictures == 0) {
-				        File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
-				        if (pictureFile == null) {
-					        LOG.debug(
-					            "Konnte Daei nicht erstellen, Berechtigungen überprüfen");
-					        return;
-				        }
-				        FileOutputStream fos = null;
-				        try {
-					        fos = new FileOutputStream(pictureFile);
-					        fos.write(data);
-					        fos.close();
-					        final Uri imageUri = getImageContentUri(
-					            getContext(), pictureFile);
-					        pictures.add(imageUri.toString());
-					        showLastPicture(imageUri);
-					        picturesTaken++;
-					        if (maxPictures > 0) {
-						        Toast.makeText(getContext(),
-						            "Picture " + picturesTaken + " / "
-						                    + maxPictures,
-						            Toast.LENGTH_SHORT).show();
-					        } else {
-						        LOG.debug("Picture " + picturesTaken + " / "
-						                + maxPictures);
-					        }
-					        displayPicturesTaken();
-					        // set Result
-					        resultBundle.putStringArrayList("pictures",
-					            pictures);
-					        resultIntent.putExtra("data", resultBundle);
+	@Override
+	public void onPictureTaken(byte[] data, Camera camera) {
+		// wenn maxPictures noch nicht erreicht
+		if (picturesTaken < maxPictures || maxPictures == 0) {
+			File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
+			if (pictureFile == null) {
+				LOG.debug(
+				    "Konnte Daei nicht erstellen, Berechtigungen überprüfen");
+				return;
+			}
+			FileOutputStream fos = null;
+			try {
+				fos = new FileOutputStream(pictureFile);
+				fos.write(data);
+				fos.close();
+				final Uri imageUri =
+				        getImageContentUri(getContext(), pictureFile);
+				pictures.add(imageUri.toString());
+				showLastPicture(imageUri);
+				picturesTaken++;
+				if (maxPictures > 0) {
+					Toast.makeText(getContext(),
+					    "Picture " + picturesTaken + " / " + maxPictures,
+					    Toast.LENGTH_SHORT).show();
+				} else {
+					LOG.debug("Picture " + picturesTaken + " / " + maxPictures);
+				}
+				displayPicturesTaken();
+				// set Result
+				resultBundle.putStringArrayList("pictures", pictures);
+				resultIntent.putExtra("data", resultBundle);
 
-					        sendNewPictureBroadcast(imageUri);
-					        camera.startPreview();
-					        safeToTakePicture = true;
-				        } catch (FileNotFoundException e) {
-					        LOG.debug("File not found: " + e);
-				        } catch (IOException e) {
-					        LOG.debug("Error accessing file: " + e);
-				        } finally {
-					        if (fos != null) {
-						        try {
-							        fos.close();
-						        } catch (IOException e) {
-							        LOG.debug("" + e);
-						        }
-					        }
-					        progress.dismiss();
-				        }
-			        }
+				sendNewPictureBroadcast(imageUri);
+				camera.startPreview();
+				safeToTakePicture = true;
+			} catch (FileNotFoundException e) {
+				LOG.debug("File not found: " + e);
+			} catch (IOException e) {
+				LOG.debug("Error accessing file: " + e);
+			} finally {
+				if (fos != null) {
+					try {
+						fos.close();
+					} catch (IOException e) {
+						LOG.debug("" + e);
+					}
+				}
+				progress.dismiss();
+			}
+		}
 
-			        // wenn maxPictures erreicht, Bildpfade zurückgeben
-			        if (picturesTaken == maxPictures) {
-				        LOG.debug("maxPictures erreicht");
-				        getActivity().setResult(Activity.RESULT_OK,
-				            resultIntent);
-				        getActivity().finish();
-			        }
-		        }
-	        };
+		// wenn maxPictures erreicht, Bildpfade zurückgeben
+		if (picturesTaken == maxPictures) {
+			LOG.debug("maxPictures erreicht");
+			getActivity().setResult(Activity.RESULT_OK, resultIntent);
+			getActivity().finish();
+		}
+	}
 
 	private void displayPicturesTaken() {
 		TextView txtpicturesTaken =
@@ -487,7 +481,7 @@ public class CamFragment extends Fragment implements View.OnClickListener {
 		    "Bild wird gespeichert...");
 		MediaActionSound sound = new MediaActionSound();
 		sound.play(MediaActionSound.SHUTTER_CLICK);
-		camera.takePicture(null, null, pictureCallback);
+		camera.takePicture(null, null, this);
 		safeToTakePicture = false;
 	}
 
