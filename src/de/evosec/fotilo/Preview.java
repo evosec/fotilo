@@ -1,6 +1,7 @@
 package de.evosec.fotilo;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -153,8 +154,10 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
 			float x = event.getX();
 			float y = event.getY();
 
-			Rect touchRect = new Rect((int) (x - 100), (int) (y - 100),
-			    (int) (x + 100), (int) (y + 100));
+			Rect touchRect = new Rect(BigDecimal.valueOf(x - 100).intValue(),
+			    BigDecimal.valueOf(y - 100).intValue(),
+			    BigDecimal.valueOf(x + 100).intValue(),
+			    BigDecimal.valueOf(y + 100).intValue());
 
 			final Rect targetFocusRect =
 			        new Rect(touchRect.left * 2000 / this.getWidth() - 1000,
