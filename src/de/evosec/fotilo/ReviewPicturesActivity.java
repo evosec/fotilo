@@ -58,6 +58,8 @@ public class ReviewPicturesActivity extends AppCompatActivity
 		case R.id.btn_fertig:
 			returnPictures(Activity.RESULT_FIRST_USER);
 			break;
+		default:
+			break;
 		}
 	}
 
@@ -66,6 +68,8 @@ public class ReviewPicturesActivity extends AppCompatActivity
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
 			returnPictures(Activity.RESULT_OK);
+		default:
+			break;
 		}
 		return super.onKeyDown(keyCode, event);
 	}
