@@ -1,6 +1,5 @@
 package de.evosec.fotilo;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -99,8 +98,7 @@ public class ImageAdapter extends BaseAdapter
 		return imageView;
 	}
 
-	private Bitmap getThumbnail(Uri uri)
-	        throws FileNotFoundException, IOException {
+	private Bitmap getThumbnail(Uri uri) throws IOException {
 		InputStream input = mContentResolver.openInputStream(uri);
 		BitmapFactory.Options onlyBoundsOptions = new BitmapFactory.Options();
 		onlyBoundsOptions.inJustDecodeBounds = true;
