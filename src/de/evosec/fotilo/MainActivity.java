@@ -124,13 +124,14 @@ public class MainActivity extends AppCompatActivity {
 								    // related features or quit the app.
 								    finish();
 								    break;
+							    default:
+								    break;
 							    }
 						    }
 					    });
-				}
-				// permission is denied (and never ask again is checked)
-				// shouldShowRequestPermissionRationale will return false
-				else {
+				} else {
+					// permission is denied (and never ask again is checked)
+					// shouldShowRequestPermissionRationale will return false
 					Toast
 					    .makeText(this, "Go to settings and enable permissions",
 					        Toast.LENGTH_LONG)
