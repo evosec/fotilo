@@ -40,14 +40,14 @@ public class ImageAdapter extends BaseAdapter
 	private final ContentResolver mContentResolver;
 	private final ArrayList<String> uris;
 	private ArrayList<String> selectedUris;
-	private final Button btn_delete;
+	private final Button btnDelete;
 
 	public ImageAdapter(Context c, ContentResolver cR, ArrayList<String> uris,
-	        Button btn_delete) {
+	        Button btnDelete) {
 		mContext = c;
 		mContentResolver = cR;
 		this.uris = uris;
-		this.btn_delete = btn_delete;
+		this.btnDelete = btnDelete;
 		this.selectedUris = new ArrayList<>();
 		checkStatus = new SparseBooleanArray();
 	}
@@ -155,9 +155,9 @@ public class ImageAdapter extends BaseAdapter
 			}
 			setChecked(position, isChecked);
 			if (selectedUris.size() > 0) {
-				btn_delete.setEnabled(true);
+				btnDelete.setEnabled(true);
 			} else {
-				btn_delete.setEnabled(false);
+				btnDelete.setEnabled(false);
 			}
 		}
 	}
