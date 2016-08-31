@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,11 +39,11 @@ public class ImageAdapter extends BaseAdapter
 
 	private final Context mContext;
 	private final ContentResolver mContentResolver;
-	private final ArrayList<String> uris;
+	private final List<String> uris;
 	private ArrayList<String> selectedUris;
 	private final Button btnDelete;
 
-	public ImageAdapter(Context c, ContentResolver cR, ArrayList<String> uris,
+	public ImageAdapter(Context c, ContentResolver cR, List<String> uris,
 	        Button btnDelete) {
 		mContext = c;
 		mContentResolver = cR;
