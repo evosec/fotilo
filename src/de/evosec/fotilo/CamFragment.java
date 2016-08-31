@@ -151,17 +151,10 @@ public class CamFragment extends Fragment implements View.OnClickListener {
 
 	private void sendNewPictureBroadcast(Uri imageUri) {
 		Intent intent = new Intent("com.android.camera.NEW_PICTURE");
-		// Uri imageUri = null;
 		try {
-			// imageUri =
-			// Uri.parse(android.provider.MediaStore.Images.Media.insertImage(getContentResolver(),
-			// imageFile.getAbsolutePath(), null, null));
-			// imageUri = Uri.parse("file://" + imageFile.toString());
-			// imageUri = Uri.fromFile(imageFile);
-			// imageUri = getImageContentUri(getContext(), imageFile);
 			intent.setData(imageUri);
-		} catch (Exception e) {// FileNotFoundException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			LOG.debug(e.getMessage());
 		}
 		getActivity().sendBroadcast(intent);
 	}
