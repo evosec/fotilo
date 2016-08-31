@@ -94,7 +94,7 @@ public class ImageAdapter extends BaseAdapter
 			imageView
 			    .setImageBitmap(getThumbnail(Uri.parse(uris.get(position))));
 		} catch (IOException e) {
-			LOG.debug(e.getMessage());
+			LOG.debug("" + e);
 		}
 		return imageView;
 	}
