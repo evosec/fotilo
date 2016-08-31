@@ -188,11 +188,9 @@ public class CamFragment extends Fragment implements View.OnClickListener {
 		            Environment.DIRECTORY_PICTURES), "MyCam");
 
 		// Wenn Verzeichnis nicht existiert, erstellen
-		if (!storageDir.exists()) {
-			if (!storageDir.mkdirs()) {
-				LOG.debug("Konnte Bilderverzeichnis nicht erstellen!");
-				return null;
-			}
+		if (!storageDir.exists() && !storageDir.mkdirs()) {
+			LOG.debug("Konnte Bilderverzeichnis nicht erstellen!");
+			return null;
 		}
 
 		// Dateinamen erzeugen
