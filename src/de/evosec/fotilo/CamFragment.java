@@ -417,12 +417,12 @@ public class CamFragment extends Fragment implements View.OnClickListener {
 		bestSize.height = 0;
 		double fourToThreeRatio = 4.0 / 3.0;
 		for (Camera.Size supportedSize : supportedPictureSizes) {
-			if (Math.abs((double) supportedSize.width / supportedSize.height
-			        - fourToThreeRatio) == 0) {
-				if (supportedSize.width >= bestSize.width
-				        && supportedSize.height >= bestSize.height) {
-					bestSize = supportedSize;
-				}
+			if (Math
+			    .abs((double) supportedSize.width / supportedSize.height
+			            - fourToThreeRatio) == 0
+			        && supportedSize.width >= bestSize.width
+			        && supportedSize.height >= bestSize.height) {
+				bestSize = supportedSize;
 			}
 		}
 		params.setPictureSize(bestSize.width, bestSize.height);
