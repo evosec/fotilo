@@ -674,18 +674,18 @@ public class CamFragment extends Fragment implements View.OnClickListener {
 		ImageButton btnZoomOut =
 		        (ImageButton) view.findViewById(R.id.btnZoomOut);
 		btnZoomOut.setOnClickListener(this);
-		Button radio_flashmode_auto =
+		Button radioFlashmodeAuto =
 		        (Button) view.findViewById(R.id.radio_flashmode_auto);
-		radio_flashmode_auto.setOnClickListener(this);
-		Button radio_flashmode_on =
+		radioFlashmodeAuto.setOnClickListener(this);
+		Button radioFlashmodeOn =
 		        (Button) view.findViewById(R.id.radio_flashmode_on);
-		radio_flashmode_on.setOnClickListener(this);
-		Button radio_flashmode_off =
+		radioFlashmodeOn.setOnClickListener(this);
+		Button radioFlashmodeOff =
 		        (Button) view.findViewById(R.id.radio_flashmode_off);
-		radio_flashmode_off.setOnClickListener(this);
-		Button radio_flashmode_redEye =
+		radioFlashmodeOff.setOnClickListener(this);
+		Button radioFlashmodeRedEye =
 		        (Button) view.findViewById(R.id.radio_flashmode_redEye);
-		radio_flashmode_redEye.setOnClickListener(this);
+		radioFlashmodeRedEye.setOnClickListener(this);
 		return view;
 	}
 
