@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
 			((CamFragment) getSupportFragmentManager()
 			    .findFragmentByTag("CamFragment")).onKeyDown(keyCode, event);
 		} catch (Exception e) {
-			LOG.debug("onKeyDown() : " + e.getMessage());
+			LOG.debug("onKeyDown() : " + e);
 		}
 		return super.onKeyDown(keyCode, event);
 	}
