@@ -80,7 +80,8 @@ public class ReviewPicturesActivity extends AppCompatActivity
 	}
 
 	private void deletePictures() {
-		ArrayList<String> selectedPictureUris = imageAdapter.getSelectedUris();
+		ArrayList<String> selectedPictureUris =
+		        (ArrayList<String>) imageAdapter.getSelectedUris();
 		for (String uri : selectedPictureUris) {
 			LOG.debug("Picture deleted: " + uri);
 			getContentResolver().delete(Uri.parse(uri), null, null);

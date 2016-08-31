@@ -161,11 +161,11 @@ public class ImageAdapter extends BaseAdapter
 		}
 	}
 
-	public ArrayList<String> getSelectedUris() {
+	public List<String> getSelectedUris() {
 		return selectedUris;
 	}
 
-	public void setSelectedUris(ArrayList<String> selectedUris) {
-		this.selectedUris = selectedUris;
+	public void setSelectedUris(List<String> selectedUris) {
+		this.selectedUris = (ArrayList<String>) selectedUris;
 	}
 }
