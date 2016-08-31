@@ -748,6 +748,8 @@ public class CamFragment extends Fragment implements View.OnClickListener {
 		case R.id.pictureReview:
 			startReviewPicturesActivity();
 			break;
+		default:
+			break;
 		}
 	}
 
