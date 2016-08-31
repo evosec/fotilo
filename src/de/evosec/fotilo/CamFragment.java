@@ -373,7 +373,7 @@ public class CamFragment extends Fragment implements View.OnClickListener {
 		largestSize.height = 0;
 		for (Camera.Size size : sizes) {
 			double ratio = (double) size.width / (double) size.height;
-			if (ratio == aspectRatio) {
+			if (Math.abs(ratio - aspectRatio) < 0.00000001) {
 				if (size.width >= largestSize.width
 				        && size.height >= largestSize.height) {
 					largestSize = size;
@@ -563,7 +563,9 @@ public class CamFragment extends Fragment implements View.OnClickListener {
 		if (camera != null) {
 			camera.stopPreview();
 			camera.setPreviewCallback(null);
-			preview.getHolder().removeCallback(preview);
+			if (preview != null) {
+				preview.getHolder().removeCallback(preview);
+			}
 			camera.release();
 			camera = null;
 			if (preview != null && preview.getCamera() != null) {
