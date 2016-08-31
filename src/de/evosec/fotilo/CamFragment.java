@@ -79,10 +79,9 @@ public class CamFragment extends Fragment implements View.OnClickListener {
 					            "Konnte Daei nicht erstellen, Berechtigungen überprüfen");
 					        return;
 				        }
-
+				        FileOutputStream fos = null;
 				        try {
-					        FileOutputStream fos =
-					                new FileOutputStream(pictureFile);
+					        fos = new FileOutputStream(pictureFile);
 					        fos.write(data);
 					        fos.close();
 					        final Uri imageUri = getImageContentUri(
@@ -114,6 +113,13 @@ public class CamFragment extends Fragment implements View.OnClickListener {
 					        LOG.debug(
 					            "Error accessing file: " + e.getMessage());
 				        } finally {
+					        if (fos != null) {
+						        try {
+							        fos.close();
+						        } catch (IOException e) {
+							        LOG.debug(e.getMessage());
+						        }
+					        }
 					        progress.dismiss();
 				        }
 			        }
