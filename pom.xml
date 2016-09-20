@@ -9,7 +9,7 @@
 
     <groupId>fotilo</groupId>
     <artifactId>fotilo</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3-SNAPSHOT</version>
     <packaging>apk</packaging>
 
     <properties>
