@@ -48,8 +48,6 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
 		this.drawingView = drawingView;
 		surfaceHolder = getHolder();
 		surfaceHolder.addCallback(this);
-		// only for Android versions under 3.0
-		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 	}
 
 	@Override
