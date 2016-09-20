@@ -154,6 +154,9 @@
                 <artifactId>android-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
+                    <sdk>
+                        <platform>19</platform>
+                    </sdk>
                     <resourceDirectory>${project.basedir}/res</resourceDirectory>
                     <failOnNonStandardStructure>false</failOnNonStandardStructure>
                     <!-- Skip lint since it never exits -->
