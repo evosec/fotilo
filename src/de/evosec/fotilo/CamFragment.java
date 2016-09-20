@@ -92,6 +92,7 @@ public class CamFragment extends Fragment
 				    "Konnte Daei nicht erstellen, Berechtigungen überprüfen");
 				return;
 			}
+			@SuppressWarnings("resource")
 			FileOutputStream fos = null;
 			try {
 				fos = new FileOutputStream(pictureFile);
