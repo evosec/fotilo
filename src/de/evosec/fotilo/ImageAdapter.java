@@ -98,14 +98,24 @@ public class ImageAdapter extends BaseAdapter
 		return imageView;
 	}
 
+	@SuppressWarnings("resource")
 	private Bitmap getThumbnail(Uri uri) throws IOException {
-		InputStream input = mContentResolver.openInputStream(uri);
 		BitmapFactory.Options onlyBoundsOptions = new BitmapFactory.Options();
-		onlyBoundsOptions.inJustDecodeBounds = true;
-		onlyBoundsOptions.inDither = true;// optional
-		onlyBoundsOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;// optional
-		BitmapFactory.decodeStream(input, null, onlyBoundsOptions);
-		input.close();
+
+		InputStream input = null;
+		try {
+			input = mContentResolver.openInputStream(uri);
+
+			onlyBoundsOptions.inJustDecodeBounds = true;
+			onlyBoundsOptions.inDither = true;// optional
+			onlyBoundsOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;// optional
+			BitmapFactory.decodeStream(input, null, onlyBoundsOptions);
+		} finally {
+			if (input != null) {
+				input.close();
+			}
+		}
+
 		if (onlyBoundsOptions.outWidth == -1
 		        || onlyBoundsOptions.outHeight == -1) {
 			return null;
@@ -123,10 +133,15 @@ public class ImageAdapter extends BaseAdapter
 		bitmapOptions.inSampleSize = getPowerOfTwoForSampleRatio(ratio);
 		bitmapOptions.inDither = true;// optional
 		bitmapOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;// optional
-		input = mContentResolver.openInputStream(uri);
-		Bitmap bitmap = BitmapFactory.decodeStream(input, null, bitmapOptions);
-		input.close();
-		return bitmap;
+
+		try {
+			input = mContentResolver.openInputStream(uri);
+			return BitmapFactory.decodeStream(input, null, bitmapOptions);
+		} finally {
+			if (input != null) {
+				input.close();
+			}
+		}
 	}
 
 	private static int getPowerOfTwoForSampleRatio(double ratio) {

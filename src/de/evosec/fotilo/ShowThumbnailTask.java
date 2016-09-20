@@ -47,14 +47,24 @@ public class ShowThumbnailTask extends AsyncTask<Uri, Void, Bitmap> {
 		pictureReview.setImageBitmap(result);
 	}
 
+	@SuppressWarnings("resource")
 	private Bitmap getThumbnail(Uri uri) throws IOException {
-		InputStream input = contentResolver.openInputStream(uri);
 		BitmapFactory.Options onlyBoundsOptions = new BitmapFactory.Options();
-		onlyBoundsOptions.inJustDecodeBounds = true;
-		onlyBoundsOptions.inDither = true;// optional
-		onlyBoundsOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;// optional
-		BitmapFactory.decodeStream(input, null, onlyBoundsOptions);
-		input.close();
+
+		InputStream input = null;
+		try {
+			input = contentResolver.openInputStream(uri);
+
+			onlyBoundsOptions.inJustDecodeBounds = true;
+			onlyBoundsOptions.inDither = true;// optional
+			onlyBoundsOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;// optional
+			BitmapFactory.decodeStream(input, null, onlyBoundsOptions);
+		} finally {
+			if (input != null) {
+				input.close();
+			}
+		}
+
 		if (onlyBoundsOptions.outWidth == -1
 		        || onlyBoundsOptions.outHeight == -1) {
 			return null;
@@ -72,10 +82,15 @@ public class ShowThumbnailTask extends AsyncTask<Uri, Void, Bitmap> {
 		bitmapOptions.inSampleSize = getPowerOfTwoForSampleRatio(ratio);
 		bitmapOptions.inDither = true;// optional
 		bitmapOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;// optional
-		input = contentResolver.openInputStream(uri);
-		Bitmap bitmap = BitmapFactory.decodeStream(input, null, bitmapOptions);
-		input.close();
-		return bitmap;
+
+		try {
+			input = contentResolver.openInputStream(uri);
+			return BitmapFactory.decodeStream(input, null, bitmapOptions);
+		} finally {
+			if (input != null) {
+				input.close();
+			}
+		}
 	}
 
 	private static int getPowerOfTwoForSampleRatio(double ratio) {
