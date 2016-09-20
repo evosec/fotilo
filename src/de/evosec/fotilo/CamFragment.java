@@ -652,7 +652,7 @@ public class CamFragment extends Fragment
 
 		LOG.debug("onCreate() maxPictures = " + maxPictures);
 		this.picturesTaken = 0;
-		this.pictures = new ArrayList<String>();
+		this.pictures = new ArrayList<>();
 		camera = getCameraInstance();
 		if (preview != null && preview.getCamera() == null) {
 			preview.setCamera(camera);
