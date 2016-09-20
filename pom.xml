@@ -131,6 +131,7 @@
     <build>
 
         <plugins>
+            
             <plugin>
                 <groupId>external.atlassian.jgitflow</groupId>
                 <artifactId>jgitflow-maven-plugin</artifactId>
@@ -139,6 +140,7 @@
                     <password>${jgitflow.password}</password>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -148,6 +150,7 @@
                     </sourceFileExcludes>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>com.simpligility.maven.plugins</groupId>
                 <artifactId>android-maven-plugin</artifactId>
@@ -160,6 +163,7 @@
                     <lintSkip>true</lintSkip>
                 </configuration>
             </plugin>
+
         </plugins>
 
     </build>
