@@ -130,7 +130,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
 
 	public void doTouchFocus(final Rect tfocusRect) {
 		try {
-			List<Area> focusList = new ArrayList<Area>();
+			List<Area> focusList = new ArrayList<>();
 			Area focusArea = new Area(tfocusRect, 1000);
 			focusList.add(focusArea);
 
