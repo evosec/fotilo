@@ -20,7 +20,7 @@ android {
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
-            resources.srcDirs = ['res']
+            res.srcDirs = ['res']
         }
     }
 }
