@@ -17,6 +17,9 @@
 
     <properties>
         <java.version>1.7</java.version>
+
+        <jgitflow.username>jenkins</jgitflow.username>
+        <jgitflow.password>jenkins</jgitflow.password>
     </properties>
 
     <dependencyManagement>
@@ -136,6 +139,14 @@
         <sourceDirectory>src</sourceDirectory>
 
         <plugins>
+            <plugin>
+                <groupId>external.atlassian.jgitflow</groupId>
+                <artifactId>jgitflow-maven-plugin</artifactId>
+                <configuration>
+                    <username>${jgitflow.username}</username>
+                    <password>${jgitflow.password}</password>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
