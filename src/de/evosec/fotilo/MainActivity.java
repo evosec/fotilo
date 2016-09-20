@@ -32,7 +32,7 @@ public class MainActivity extends FragmentActivity {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		try {
 			((CamFragment) getSupportFragmentManager()
-			    .findFragmentByTag("CamFragment")).onKeyDown(keyCode, event);
+			    .findFragmentByTag("CamFragment")).onKeyDown(keyCode);
 		} catch (Exception e) {
 			LOG.debug("onKeyDown() : " + e);
 		}

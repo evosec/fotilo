@@ -483,7 +483,7 @@ public class CamFragment extends Fragment
 		}
 	}
 
-	public void onKeyDown(int keyCode, KeyEvent event) {
+	public void onKeyDown(int keyCode) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			resultIntent.putExtra("data", resultBundle);
 			getActivity().setResult(Activity.RESULT_CANCELED, resultIntent);
