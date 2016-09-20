@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/rootView"
+    android:gravity="center">
+
+    <FrameLayout
+        android:id="@+id/preview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#000000"
+        android:layout_centerInParent="true">
+
+        <de.evosec.fotilo.DrawingView
+            android:id="@+id/drawingView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </FrameLayout>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnZoomIn"
+        android:src="@drawable/ic_zoom_in_black_24dp"
+        android:layout_alignParentBottom="false"
+        android:layout_gravity="right|top"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:visibility="invisible"
+        android:minHeight="50dp"
+        android:minWidth="50dp"
+        android:scaleType="fitXY"
+        android:background="#ffffff" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_capture"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/txtCurrentZoom"
+        android:src="@drawable/ic_camera_black_24dp"
+        android:minHeight="50dp"
+        android:minWidth="50dp"
+        android:layout_toRightOf="@+id/txtCurrentZoom"
+        android:scaleType="fitXY"
+        android:background="#ffffff" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_flashmode"
+        android:onClick="onBtn_flashmodeClick"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:minHeight="50dp"
+        android:minWidth="50dp"
+        android:scaleType="fitXY"
+        android:background="#ffffff" />
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/radioGroup_Flashmodes"
+        android:visibility="invisible"
+        android:background="#ffffff">
+
+        <RadioButton android:id="@+id/radio_flashmode_auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Flash auto"
+            android:visibility="invisible"
+            android:onClick="onRadioButtonClicked"/>
+
+        <RadioButton android:id="@+id/radio_flashmode_on"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Flash on"
+            android:visibility="invisible"
+            android:onClick="onRadioButtonClicked"/>
+        <RadioButton android:id="@+id/radio_flashmode_off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Flash off"
+            android:visibility="invisible"
+            android:onClick="onRadioButtonClicked"/>
+        <RadioButton android:id="@+id/radio_flashmode_redEye"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Flash red eye mode"
+            android:visibility="invisible"
+            android:onClick="onRadioButtonClicked"/>
+    </RadioGroup>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnZoomOut"
+        android:src="@drawable/ic_zoom_out_black_24dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/btn_capture"
+        android:layout_alignStart="@+id/btn_capture"
+        android:visibility="invisible"
+        android:minHeight="50dp"
+        android:minWidth="50dp"
+        android:scaleType="fitXY"
+        android:background="#ffffff" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCurrentZoom"
+        android:layout_alignBottom="@+id/btnZoomIn"
+        android:layout_toLeftOf="@+id/btnZoomIn"
+        android:visibility="invisible"
+        android:text=""
+        android:layout_alignParentTop="true"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:textSize="12pt" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pictureReview"
+        android:visibility="invisible"
+        android:adjustViewBounds="false"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:maxHeight="50dp"
+        android:maxWidth="50dp"
+        android:layout_alignTop="@+id/btnZoomOut"
+        android:layout_alignRight="@+id/btn_flashmode"
+        android:layout_alignEnd="@+id/btn_flashmode" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/picturesTaken"
+        android:layout_alignParentBottom="true"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:textSize="12pt"
+        android:layout_alignRight="@+id/radioGroup_Flashmodes"
+        android:layout_alignEnd="@+id/radioGroup_Flashmodes"
+        android:layout_toRightOf="@+id/pictureReview"
+        android:layout_toEndOf="@+id/pictureReview" />
+
+</RelativeLayout>
