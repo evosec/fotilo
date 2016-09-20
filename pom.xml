@@ -57,7 +57,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    
+
     <profiles>
         <profile>
             <id>production</id>
