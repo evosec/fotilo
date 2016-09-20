@@ -88,6 +88,10 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <plugin>
+                        <groupId>com.simpligility.maven.plugins</groupId>
+                        <artifactId>android-maven-plugin</artifactId>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
