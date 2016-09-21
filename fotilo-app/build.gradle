@@ -37,4 +37,5 @@ dependencies {
     compile 'com.github.tony19:logback-android-classic:1.1.1-6'
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.android.support:support-v4:24.2.0'
+    compile 'com.android.support:recyclerview-v7:24.2.0'
 }
