@@ -1,15 +1,19 @@
 package de.evosec.fotilo;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,7 +21,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     private final Context context;
     private final List<String> uris;
-    private List<String> selectedUris = Collections.emptyList();
+    private final Button btnDelete;
+    private final SparseBooleanArray selectedPositions = new SparseBooleanArray();
+    private final List<String> selectedUris = new ArrayList<>();
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -29,9 +35,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         }
     }
 
-    public ImageAdapter(Context context, List<String> uris) {
+    public ImageAdapter(Context context, List<String> uris, Button btnDelete) {
         this.context = context;
         this.uris = uris;
+        this.btnDelete = btnDelete;
     }
 
     @Override
@@ -41,8 +48,27 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        Picasso.with(context).load(Uri.parse(uris.get(position))).resize(480,480).centerInside().into(holder.imageView);
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        if (selectedPositions.get(position)) {
+            holder.imageView.setBackgroundColor(Color.BLUE);
+        } else {
+            holder.imageView.setBackgroundColor(Color.TRANSPARENT);
+        }
+        Picasso.with(context).load(Uri.parse(uris.get(position))).resize(640,480).centerInside().into(holder.imageView);
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isSelected = !selectedPositions.get(position);
+                selectedPositions.put(position, isSelected);
+                if (isSelected) {
+                    selectedUris.add(uris.get(position));
+                } else {
+                    selectedUris.remove(uris.get(position));
+                }
+                btnDelete.setEnabled(!selectedUris.isEmpty());
+                notifyItemChanged(position);
+            }
+        });
     }
 
     @Override
@@ -54,8 +80,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         return selectedUris;
     }
 
-    public void setSelectedUris(List<String> selectedUris) {
-        this.selectedUris = selectedUris;
+    public void resetSelections() {
+        selectedPositions.clear();
     }
 
 }

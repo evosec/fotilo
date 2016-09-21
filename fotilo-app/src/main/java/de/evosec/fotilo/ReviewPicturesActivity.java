@@ -44,7 +44,7 @@ public class ReviewPicturesActivity extends Activity
 		btnDelete.setOnClickListener(this);
 		btnOk.setOnClickListener(this);
 		btnFertig.setOnClickListener(this);
-		imageAdapter = new ImageAdapter(this, pictureUris);
+		imageAdapter = new ImageAdapter(this, pictureUris, btnDelete);
 		pictureGrid.setAdapter(imageAdapter);
 	}
 
@@ -94,7 +94,7 @@ public class ReviewPicturesActivity extends Activity
 			getContentResolver().delete(Uri.parse(uri), null, null);
 		}
 		this.pictureUris.removeAll(selectedPictureUris);
-		imageAdapter.setSelectedUris(new ArrayList<String>());
+		imageAdapter.resetSelections();
 		imageAdapter.notifyDataSetChanged();
 	}
 }
