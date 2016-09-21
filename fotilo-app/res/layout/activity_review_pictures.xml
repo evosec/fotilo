@@ -1,41 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:screenOrientation="landscape"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="de.evosec.fotilo.ReviewPicturesActivity">
+    android:screenOrientation="landscape">
 
-    <GridView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/pictureGrid"
-        android:numColumns="5"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Löschen"
         android:id="@+id/btn_delete"
-        android:layout_gravity="left|bottom"
-        android:enabled="false" />
-
-    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mehr Bilder"
+        android:layout_gravity="start|bottom"
+        android:enabled="false"
+        android:text="@string/delete" />
+
+    <Button
         android:id="@+id/btn_ok"
-        android:layout_gravity="right|bottom"
-        android:enabled="true" />
-
-    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fertig"
-        android:id="@+id/btn_fertig"
-        android:layout_gravity="center_horizontal|bottom" />
+        android:layout_gravity="end|bottom"
+        android:enabled="true"
+        android:text="@string/take_more_pictures" />
+
+    <Button
+        android:id="@+id/btn_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:text="@string/done" />
 </FrameLayout>

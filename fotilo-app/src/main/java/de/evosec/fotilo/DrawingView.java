@@ -7,9 +7,6 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 
-/**
- * Created by Christian on 01.03.2016.
- */
 public class DrawingView extends View {
 
 	private static int COLOR_WHITE = 0xeed7d7d7;
