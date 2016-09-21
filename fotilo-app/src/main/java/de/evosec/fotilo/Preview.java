@@ -20,9 +20,6 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.FrameLayout;
 
-/**
- * Created by Christian on 19.02.2016.
- */
 public class Preview extends SurfaceView implements SurfaceHolder.Callback {
 
 	private static final Logger LOG = LoggerFactory.getLogger(Preview.class);

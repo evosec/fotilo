@@ -13,9 +13,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.widget.ImageButton;
 
-/**
- * Created by Christian on 19.08.2016.
- */
 public class ShowThumbnailTask extends AsyncTask<Uri, Void, Bitmap> {
 
 	private static final Logger LOG =
