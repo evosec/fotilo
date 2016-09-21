@@ -788,7 +788,7 @@ public class CamFragment extends Fragment
 				Bundle bundle = data.getBundleExtra("data");
 				this.pictures = bundle.getStringArrayList("pictures");
 				this.picturesTaken = this.pictures.size();
-				if (pictures.isEmpty()) {
+				if (!pictures.isEmpty()) {
 					showLastPicture(
 					    Uri.parse(this.pictures.get(pictures.size() - 1)));
 				}
