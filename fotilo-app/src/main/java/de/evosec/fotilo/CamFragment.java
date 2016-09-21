@@ -400,12 +400,11 @@ public class CamFragment extends Fragment
 		return largestSize;
 	}
 
-	public void configurePreviewSize(Camera.Size size) {
+	public void configurePreviewSize(Camera.Size bestPreviewSize) {
 		Display display = getActivity().getWindowManager().getDefaultDisplay();
 		Camera.Parameters params = camera.getParameters();
 		int screenWidth = display.getWidth();
 		int screenHeight = display.getHeight();
-		Camera.Size bestPreviewSize = size;
 		params.setPreviewSize(bestPreviewSize.width, bestPreviewSize.height);
 		camera.setParameters(params);
 		preview.getLayoutParams().width = bestPreviewSize.width;
