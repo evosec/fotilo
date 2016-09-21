@@ -124,7 +124,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <sdk>
-                        <platform>19</platform>
+                        <platform>16</platform>
                     </sdk>
                     <resourceDirectory>${project.basedir}/res</resourceDirectory>
                     <lintSkip>true</lintSkip>
