@@ -807,10 +807,6 @@ public class CamFragment extends Fragment
 		}
 	}
 
-	private Context getContext() {
-		return getActivity();
-	}
-
 	/**
 	 * This interface must be implemented by activities that contain this
 	 * fragment to allow an interaction in this fragment to be communicated to
