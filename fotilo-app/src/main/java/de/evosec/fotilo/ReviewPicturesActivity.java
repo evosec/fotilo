@@ -1,6 +1,7 @@
 package de.evosec.fotilo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,10 +10,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridView;
 
 public class ReviewPicturesActivity extends Activity
         implements View.OnClickListener {
@@ -32,17 +34,18 @@ public class ReviewPicturesActivity extends Activity
 		setContentView(R.layout.activity_review_pictures);
 		Bundle bundle = getIntent().getBundleExtra("data");
 		pictureUris = bundle.getStringArrayList("pictures");
-		final GridView pictureGrid = (GridView) findViewById(R.id.pictureGrid);
+		final RecyclerView pictureGrid = (RecyclerView) findViewById(R.id.recycler_view);
+		pictureGrid.setHasFixedSize(true);
+		RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(),4);
+		pictureGrid.setLayoutManager(layoutManager);
 		this.btnDelete = (Button) findViewById(R.id.btn_delete);
 		this.btnOk = (Button) findViewById(R.id.btn_ok);
-		this.btnFertig = (Button) findViewById(R.id.btn_fertig);
+		this.btnFertig = (Button) findViewById(R.id.btn_done);
 		btnDelete.setOnClickListener(this);
 		btnOk.setOnClickListener(this);
 		btnFertig.setOnClickListener(this);
-		imageAdapter = new ImageAdapter(this, getContentResolver(), pictureUris,
-		    btnDelete);
+		imageAdapter = new ImageAdapter(this, pictureUris);
 		pictureGrid.setAdapter(imageAdapter);
-		pictureGrid.setOnItemClickListener(imageAdapter);
 	}
 
 	@Override
@@ -54,7 +57,7 @@ public class ReviewPicturesActivity extends Activity
 		case R.id.btn_ok:
 			returnPictures(Activity.RESULT_OK);
 			break;
-		case R.id.btn_fertig:
+		case R.id.btn_done:
 			returnPictures(Activity.RESULT_FIRST_USER);
 			break;
 		default:
@@ -84,8 +87,8 @@ public class ReviewPicturesActivity extends Activity
 	}
 
 	private void deletePictures() {
-		ArrayList<String> selectedPictureUris =
-		        (ArrayList<String>) imageAdapter.getSelectedUris();
+		List<String> selectedPictureUris =
+		         imageAdapter.getSelectedUris();
 		for (String uri : selectedPictureUris) {
 			LOG.debug("Picture deleted: " + uri);
 			getContentResolver().delete(Uri.parse(uri), null, null);
