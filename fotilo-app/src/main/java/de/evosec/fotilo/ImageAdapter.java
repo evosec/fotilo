@@ -54,7 +54,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         } else {
             holder.imageView.setBackgroundColor(Color.TRANSPARENT);
         }
-        Picasso.with(context).load(Uri.parse(uris.get(position))).resize(640,480).centerInside().into(holder.imageView);
+        Picasso.with(context).load(Uri.parse(uris.get(position))).resize(640, 480).centerInside().into(holder.imageView);
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,6 +82,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     public void resetSelections() {
         selectedPositions.clear();
+        selectedUris.clear();
+        btnDelete.setEnabled(false);
     }
 
 }
