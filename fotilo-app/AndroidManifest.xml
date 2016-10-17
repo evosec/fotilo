@@ -2,15 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.evosec.fotilo">
 
-    <uses-sdk 
+    <uses-sdk
         android:minSdkVersion="16"
-        android:targetSdkVersion="24"/>
+        android:targetSdkVersion="24" />
 
     <uses-feature
-        android:name="android.hardware.Camera"
-        android:required="true" />
-	
-	<uses-permission android:name="android.permission.CAMERA" />
+        android:name="android.hardware.Camera" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -44,10 +43,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:screenOrientation="landscape"
             android:name="de.evosec.fotilo.ReviewPicturesActivity"
             android:label="@string/title_activity_review_pictures"
-            android:theme="@style/AppTheme"></activity>
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>
