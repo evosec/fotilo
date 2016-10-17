@@ -2,6 +2,9 @@ package de.evosec.fotilo;
 
 import android.app.Application;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class FotiloApplication extends Application {
 
     private static final Logger LOG =
