@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 public class FotiloApplication extends Application {
 
     private static final Logger LOG =
-            LoggerFactory.getLogger(EvoCamApplication.class);
+            LoggerFactory.getLogger(FotiloApplication.class);
 
     private Thread.UncaughtExceptionHandler defaultHandler;
 
