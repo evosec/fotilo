@@ -143,6 +143,7 @@
                     </sdk>
                     <resourceDirectory>${project.basedir}/res</resourceDirectory>
                     <lintSkip>true</lintSkip>
+                    <aaptExtraArgs>--no-version-vectors</aaptExtraArgs>
                 </configuration>
             </plugin>
 
