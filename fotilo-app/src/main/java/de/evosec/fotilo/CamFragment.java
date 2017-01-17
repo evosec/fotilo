@@ -557,7 +557,7 @@ public class CamFragment extends Fragment
 		        (TextView) getView().findViewById(R.id.txtCurrentZoom);
 		txtCurrentZoom.setVisibility(View.VISIBLE);
 		txtCurrentZoom.setText(
-		    "Zoom: " + this.currentZoomLevel + " / " + this.maxZoomLevel);
+		    "Zoom:\n" + this.currentZoomLevel + " / " + this.maxZoomLevel);
 	}
 
 	private void updateFlashModeIcon() {
