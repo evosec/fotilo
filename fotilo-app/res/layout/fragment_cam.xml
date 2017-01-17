@@ -153,7 +153,7 @@
         android:maxHeight="50dp"
         android:maxWidth="50dp"
         android:background="@color/uiElementBackground"
-        android:layout_alignTop="@+id/btnZoomOut"
+        android:layout_alignTop="@+id/menuToggle"
         android:layout_alignRight="@+id/btn_flashmode"
         android:layout_alignEnd="@+id/btn_flashmode" />
 
