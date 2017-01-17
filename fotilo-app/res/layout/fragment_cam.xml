@@ -173,4 +173,18 @@
         android:layout_toRightOf="@+id/pictureReview"
         android:layout_toEndOf="@+id/pictureReview" />
 
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/menuToggle"
+        android:src="@drawable/ic_menu_dots"
+        android:minHeight="50dp"
+        android:minWidth="50dp"
+        android:scaleType="fitXY"
+        android:background="@color/uiElementBackground"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true" />
+
 </RelativeLayout>

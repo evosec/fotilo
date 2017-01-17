@@ -25,9 +25,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.PopupMenu;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -47,7 +50,7 @@ import android.widget.Toast;
  * fragment.
  */
 public class CamFragment extends Fragment
-        implements View.OnClickListener, Camera.PictureCallback {
+        implements View.OnClickListener, Camera.PictureCallback, PopupMenu.OnMenuItemClickListener {
 
 	private static final Logger LOG =
 	        LoggerFactory.getLogger(CamFragment.class);
@@ -698,6 +701,9 @@ public class CamFragment extends Fragment
 		Button radioFlashmodeRedEye =
 		        (Button) view.findViewById(R.id.radio_flashmode_redEye);
 		radioFlashmodeRedEye.setOnClickListener(this);
+		ImageButton showMenuButton =
+		        (ImageButton) view.findViewById(R.id.menuToggle);
+		showMenuButton.setOnClickListener(this);
 		return view;
 	}
 
@@ -754,8 +760,34 @@ public class CamFragment extends Fragment
 		case R.id.pictureReview:
 			startReviewPicturesActivity();
 			break;
+		case R.id.menuToggle:
+			showMenu();
+			break;
 		default:
 			break;
+		}
+	}
+
+	private void showMenu() {
+		View view = getView().findViewById(R.id.menuToggle);
+		PopupMenu popup = new PopupMenu(getActivity(), view);
+		MenuInflater inflater = popup.getMenuInflater();
+		inflater.inflate(R.menu.menu, popup.getMenu());
+		popup.setOnMenuItemClickListener(this);
+		popup.show();
+	}
+
+	@Override
+	public boolean onMenuItemClick(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.showPrivacyPolicy:
+				Intent intent = new Intent(Intent.ACTION_VIEW,
+				Uri.parse("http://www.evosec.de/datenschutz"));
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				startActivity(intent);
+				return true;
+			default:
+				return false;
 		}
 	}
 
