@@ -145,7 +145,11 @@ public class CamFragment extends Fragment
 	private void displayPicturesTaken() {
 		TextView txtpicturesTaken =
 		        (TextView) getActivity().findViewById(R.id.picturesTaken);
-		txtpicturesTaken.setVisibility(View.VISIBLE);
+		if (picturesTaken > 0) {
+			txtpicturesTaken.setVisibility(View.VISIBLE);
+		} else {
+			txtpicturesTaken.setVisibility(View.INVISIBLE);
+		}
 		txtpicturesTaken.setText("Bilder: " + picturesTaken);
 	}
 
@@ -156,6 +160,12 @@ public class CamFragment extends Fragment
 		pictureReview.setVisibility(View.VISIBLE);
 		new ShowThumbnailTask(pictureReview, getActivity().getContentResolver())
 		    .execute(imageUri);
+	}
+
+	private void hideLastPictureButton() {
+		ImageButton pictureReview =
+				(ImageButton) getActivity().findViewById(R.id.pictureReview);
+		pictureReview.setVisibility(View.INVISIBLE);
 	}
 
 	private void sendNewPictureBroadcast(Uri imageUri) {
@@ -792,6 +802,8 @@ public class CamFragment extends Fragment
 				if (!pictures.isEmpty()) {
 					showLastPicture(
 					    Uri.parse(this.pictures.get(pictures.size() - 1)));
+				} else {
+					hideLastPictureButton();
 				}
 				displayPicturesTaken();
 				if (resultCode == Activity.RESULT_FIRST_USER) {
