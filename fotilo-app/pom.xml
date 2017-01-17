@@ -139,7 +139,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <sdk>
-                        <platform>24</platform>
+                        <platform>25</platform>
                     </sdk>
                     <resourceDirectory>${project.basedir}/res</resourceDirectory>
                     <lintSkip>true</lintSkip>
