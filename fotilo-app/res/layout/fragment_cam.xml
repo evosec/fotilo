@@ -35,7 +35,7 @@
         android:minHeight="50dp"
         android:minWidth="50dp"
         android:scaleType="fitXY"
-        android:background="#ffffff" />
+        android:background="@color/uiElementBackground" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -48,7 +48,7 @@
         android:minWidth="50dp"
         android:layout_toRightOf="@+id/txtCurrentZoom"
         android:scaleType="fitXY"
-        android:background="#ffffff" />
+        android:background="@color/uiElementBackground"  />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -61,37 +61,42 @@
         android:minHeight="50dp"
         android:minWidth="50dp"
         android:scaleType="fitXY"
-        android:background="#ffffff" />
+        android:background="@color/uiElementBackground"  />
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_flashmode"
+        android:layout_alignLeft="@+id/btn_flashmode"
+        android:layout_alignStart="@+id/btn_flashmode"
         android:orientation="vertical"
         android:id="@+id/radioGroup_Flashmodes"
         android:visibility="invisible"
-        android:background="#ffffff">
+        android:background="@color/uiElementBackground"
+        android:paddingRight="5dp"
+        android:paddingEnd="5dp">
 
         <RadioButton android:id="@+id/radio_flashmode_auto"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Flash auto"
             android:visibility="invisible"
             android:onClick="onRadioButtonClicked"/>
 
         <RadioButton android:id="@+id/radio_flashmode_on"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Flash on"
             android:visibility="invisible"
             android:onClick="onRadioButtonClicked"/>
         <RadioButton android:id="@+id/radio_flashmode_off"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Flash off"
             android:visibility="invisible"
             android:onClick="onRadioButtonClicked"/>
         <RadioButton android:id="@+id/radio_flashmode_redEye"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Flash red eye mode"
             android:visibility="invisible"
@@ -110,7 +115,7 @@
         android:minHeight="50dp"
         android:minWidth="50dp"
         android:scaleType="fitXY"
-        android:background="#ffffff" />
+        android:background="@color/uiElementBackground"  />
 
     <TextView
         android:layout_width="wrap_content"
@@ -121,9 +126,15 @@
         android:visibility="invisible"
         android:text=""
         android:layout_alignParentTop="true"
+        android:gravity="center"
         android:textColor="#000000"
+        android:background="@color/uiElementBackground"
         android:textStyle="bold"
-        android:textSize="12pt" />
+        android:textSize="12pt"
+        android:paddingRight="0dp"
+        android:paddingEnd="0dp"
+        android:paddingLeft="5dp"
+        android:paddingStart="5dp"/>
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -136,6 +147,7 @@
         android:layout_alignParentBottom="true"
         android:maxHeight="50dp"
         android:maxWidth="50dp"
+        android:background="@color/uiElementBackground"
         android:layout_alignTop="@+id/btnZoomOut"
         android:layout_alignRight="@+id/btn_flashmode"
         android:layout_alignEnd="@+id/btn_flashmode" />
@@ -145,10 +157,12 @@
         android:layout_height="wrap_content"
         android:text=""
         android:id="@+id/picturesTaken"
+        android:visibility="invisible"
         android:layout_alignParentBottom="true"
         android:textColor="#000000"
         android:textStyle="bold"
         android:textSize="12pt"
+        android:background="@color/uiElementBackground"
         android:layout_alignRight="@+id/radioGroup_Flashmodes"
         android:layout_alignEnd="@+id/radioGroup_Flashmodes"
         android:layout_toRightOf="@+id/pictureReview"

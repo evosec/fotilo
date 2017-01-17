@@ -145,6 +145,7 @@ public class CamFragment extends Fragment
 	private void displayPicturesTaken() {
 		TextView txtpicturesTaken =
 		        (TextView) getActivity().findViewById(R.id.picturesTaken);
+		txtpicturesTaken.setVisibility(View.VISIBLE);
 		txtpicturesTaken.setText("Bilder: " + picturesTaken);
 	}
 
