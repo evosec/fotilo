@@ -4,7 +4,7 @@
     <parent>
         <groupId>de.evosec</groupId>
         <artifactId>fotilo</artifactId>
-        <version>0.0.10</version>
+        <version>0.0.11</version>
     </parent>
 
     <artifactId>fotilo-app</artifactId>
@@ -93,21 +93,21 @@
         <dependency>
             <groupId>com.android.support</groupId>
             <artifactId>appcompat-v7</artifactId>
-            <version>24.2.1</version>
+            <version>25.1.0</version>
             <type>aar</type>
         </dependency>
 
         <dependency>
             <groupId>com.android.support</groupId>
             <artifactId>support-v4</artifactId>
-            <version>24.2.1</version>
+            <version>25.1.0</version>
             <type>aar</type>
         </dependency>
 
         <dependency>
             <groupId>com.android.support</groupId>
             <artifactId>recyclerview-v7</artifactId>
-            <version>24.2.1</version>
+            <version>25.1.0</version>
             <type>aar</type>
         </dependency>
 
@@ -139,7 +139,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <sdk>
-                        <platform>24</platform>
+                        <platform>25</platform>
                     </sdk>
                     <resourceDirectory>${project.basedir}/res</resourceDirectory>
                     <lintSkip>true</lintSkip>
