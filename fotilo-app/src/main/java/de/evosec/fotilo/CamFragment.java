@@ -57,6 +57,8 @@ public class CamFragment extends Fragment
 	private static final int REVIEW_PICTURES_ACTIVITY_REQUEST = 123;
 	private static final int MEDIA_TYPE_IMAGE = 1;
 
+	private final MediaActionSound sound = new MediaActionSound();
+
 	private int maxPictures;
 	private int picturesTaken;
 	private ArrayList<String> pictures;
@@ -72,7 +74,8 @@ public class CamFragment extends Fragment
 	private boolean safeToTakePicture = false;
 
 	public CamFragment() {
-		// Required empty public constructor
+		// load action sound to avoid latency for first play
+		sound.load(MediaActionSound.SHUTTER_CLICK);
 	}
 
 	/**
@@ -520,7 +523,6 @@ public class CamFragment extends Fragment
 
 			@Override
 			public void onShutter() {
-				MediaActionSound sound = new MediaActionSound();
 				sound.play(MediaActionSound.SHUTTER_CLICK);
 			}
 
