@@ -516,9 +516,15 @@ public class CamFragment extends Fragment
 		// Anwender signalisieren, dass ein Bild aufgenommen wird
 		progress = ProgressDialog.show(getActivity(), "Speichern",
 		    "Bild wird gespeichert...");
-		MediaActionSound sound = new MediaActionSound();
-		sound.play(MediaActionSound.SHUTTER_CLICK);
-		camera.takePicture(null, null, this);
+		camera.takePicture(new Camera.ShutterCallback() {
+
+			@Override
+			public void onShutter() {
+				MediaActionSound sound = new MediaActionSound();
+				sound.play(MediaActionSound.SHUTTER_CLICK);
+			}
+
+		}, null, this);
 		safeToTakePicture = false;
 	}
 
