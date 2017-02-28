@@ -55,8 +55,8 @@ public class CamFragment extends Fragment
 	private static final Logger LOG =
 	        LoggerFactory.getLogger(CamFragment.class);
 	private static final int REVIEW_PICTURES_ACTIVITY_REQUEST = 123;
+	private static final int MEDIA_TYPE_IMAGE = 1;
 
-	private static int MEDIA_TYPE_IMAGE = 1;
 	private int maxPictures;
 	private int picturesTaken;
 	private ArrayList<String> pictures;
