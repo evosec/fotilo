@@ -55,8 +55,10 @@ public class CamFragment extends Fragment
 	private static final Logger LOG =
 	        LoggerFactory.getLogger(CamFragment.class);
 	private static final int REVIEW_PICTURES_ACTIVITY_REQUEST = 123;
+	private static final int MEDIA_TYPE_IMAGE = 1;
 
-	private static int MEDIA_TYPE_IMAGE = 1;
+	private final MediaActionSound sound = new MediaActionSound();
+
 	private int maxPictures;
 	private int picturesTaken;
 	private ArrayList<String> pictures;
@@ -72,7 +74,8 @@ public class CamFragment extends Fragment
 	private boolean safeToTakePicture = false;
 
 	public CamFragment() {
-		// Required empty public constructor
+		// load action sound to avoid latency for first play
+		sound.load(MediaActionSound.SHUTTER_CLICK);
 	}
 
 	/**
@@ -516,9 +519,14 @@ public class CamFragment extends Fragment
 		// Anwender signalisieren, dass ein Bild aufgenommen wird
 		progress = ProgressDialog.show(getActivity(), "Speichern",
 		    "Bild wird gespeichert...");
-		MediaActionSound sound = new MediaActionSound();
-		sound.play(MediaActionSound.SHUTTER_CLICK);
-		camera.takePicture(null, null, this);
+		camera.takePicture(new Camera.ShutterCallback() {
+
+			@Override
+			public void onShutter() {
+				sound.play(MediaActionSound.SHUTTER_CLICK);
+			}
+
+		}, null, this);
 		safeToTakePicture = false;
 	}
 
