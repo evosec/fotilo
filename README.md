@@ -10,9 +10,9 @@ You can configure the photos taken by this app by passing parameters in an `Inte
 Intent intent = new Intent("de.evosec.fotilo");
 ```
 
-### Configure min. resolution
+### Configure resolution
 
-Put your min. resolution in the intent, for example:
+Put your resolution in the intent. fotilo will automatically select the correct native resolution that has the same aspect ratio. If the camera does not natively support your resolution the next highest available with the same aspect ratio will be selected.
 
 ```java
 intent.putExtra("width", 1920);
