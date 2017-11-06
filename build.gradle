@@ -13,11 +13,12 @@ buildscript {
     }
 }
 
+apply plugin: "de.evosec.gradle.gitflow.release"
+
 allprojects {
     repositories {
         jcenter()
     }
-    apply plugin: "de.evosec.gradle.gitflow.release"
 }
 
 task clean(type: Delete) {
