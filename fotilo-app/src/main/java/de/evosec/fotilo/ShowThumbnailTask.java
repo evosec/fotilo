@@ -1,17 +1,17 @@
 package de.evosec.fotilo;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.widget.ImageButton;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class ShowThumbnailTask extends AsyncTask<Uri, Void, Bitmap> {
 
@@ -73,7 +73,7 @@ public class ShowThumbnailTask extends AsyncTask<Uri, Void, Bitmap> {
 		                : onlyBoundsOptions.outWidth;
 
 		double ratio = originalSize > THUMBNAIL_SIZE
-		        ? originalSize / THUMBNAIL_SIZE : 1.0;
+				? originalSize / (double) THUMBNAIL_SIZE : 1.0;
 
 		BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
 		bitmapOptions.inSampleSize = getPowerOfTwoForSampleRatio(ratio);
