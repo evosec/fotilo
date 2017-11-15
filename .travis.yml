@@ -1,8 +1,13 @@
 language: android
 android:
+  licenses:
+    - 'android-sdk-preview-license-.+'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
   components:
     - tools
     - platform-tools
+    - build-tools-26.0.2
     - tools
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
