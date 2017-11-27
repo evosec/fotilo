@@ -18,6 +18,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Point;
 import android.hardware.Camera;
 import android.media.MediaActionSound;
 import android.net.Uri;
@@ -364,7 +365,8 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 			findOptimalPictureSizeBySize(w, h);
 		} else if (ratio > 0) {
 			bestSize = getLargestResolutionByAspectRatio(
-			    camera.getParameters().getSupportedPictureSizes(), ratio);
+			    camera.getParameters().getSupportedPictureSizes(), ratio,
+			    false);
 			if (bestSize.width == camera.getParameters().getPreviewSize().width
 			        && bestSize.height == camera.getParameters()
 			            .getPreviewSize().height) {
@@ -402,14 +404,19 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 		double pictureRatio =
 		        (double) pictureSize.width / (double) pictureSize.height;
 		previewSize = getLargestResolutionByAspectRatio(
-		    camera.getParameters().getSupportedPreviewSizes(), pictureRatio);
+		    camera.getParameters().getSupportedPreviewSizes(), pictureRatio,
+		    true);
 		LOG.debug(
 		    "PreviewSize = " + previewSize.width + " x " + previewSize.height);
 		configurePreviewSize(previewSize);
 	}
 
 	public Camera.Size getLargestResolutionByAspectRatio(
-	        List<Camera.Size> sizes, double aspectRatio) {
+	        List<Camera.Size> sizes, double aspectRatio,
+	        boolean previewResolution) {
+		Display display = getActivity().getWindowManager().getDefaultDisplay();
+		Point displaySize = new Point();
+		display.getSize(displaySize);
 		Camera.Size largestSize = camera.getParameters().getPreviewSize();
 		largestSize.width = 0;
 		largestSize.height = 0;
@@ -418,7 +425,12 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 			if (Math.abs(ratio - aspectRatio) < 0.00000001
 			        && size.width >= largestSize.width
 			        && size.height >= largestSize.height) {
-				largestSize = size;
+				if (previewResolution && size.width <= displaySize.x
+				        && size.height <= displaySize.y) {
+					largestSize = size;
+				} else if (!previewResolution) {
+					largestSize = size;
+				}
 			}
 		}
 		return largestSize;
