@@ -73,7 +73,7 @@ public class ShowThumbnailTask extends AsyncTask<Uri, Void, Bitmap> {
 		                : onlyBoundsOptions.outWidth;
 
 		double ratio = originalSize > THUMBNAIL_SIZE
-		        ? originalSize / THUMBNAIL_SIZE : 1.0;
+		        ? originalSize / (double) THUMBNAIL_SIZE : 1.0;
 
 		BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
 		bitmapOptions.inSampleSize = getPowerOfTwoForSampleRatio(ratio);

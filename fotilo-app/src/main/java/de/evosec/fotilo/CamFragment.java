@@ -18,6 +18,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Point;
 import android.hardware.Camera;
 import android.media.MediaActionSound;
 import android.net.Uri;
@@ -49,8 +50,8 @@ import android.widget.Toast;
  * {@link CamFragment#newInstance} factory method to create an instance of this
  * fragment.
  */
-public class CamFragment extends Fragment
-        implements View.OnClickListener, Camera.PictureCallback, PopupMenu.OnMenuItemClickListener {
+public class CamFragment extends Fragment implements View.OnClickListener,
+        Camera.PictureCallback, PopupMenu.OnMenuItemClickListener {
 
 	private static final Logger LOG =
 	        LoggerFactory.getLogger(CamFragment.class);
@@ -106,24 +107,31 @@ public class CamFragment extends Fragment
 				fos.close();
 				final Uri imageUri =
 				        getImageContentUri(getContext(), pictureFile);
-				pictures.add(imageUri.toString());
-				showLastPicture(imageUri);
-				picturesTaken++;
-				if (maxPictures > 0) {
-					Toast.makeText(getContext(),
-					    "Picture " + picturesTaken + " / " + maxPictures,
-					    Toast.LENGTH_SHORT).show();
-				} else {
-					LOG.debug("Picture " + picturesTaken + " / " + maxPictures);
-				}
-				displayPicturesTaken();
-				// set Result
-				resultBundle.putStringArrayList("pictures", pictures);
-				resultIntent.putExtra("data", resultBundle);
+				if (imageUri != null) {
+					pictures.add(imageUri.toString());
+					showLastPicture(imageUri);
+					picturesTaken++;
 
-				sendNewPictureBroadcast(imageUri);
-				camera.startPreview();
-				safeToTakePicture = true;
+					if (maxPictures > 0) {
+						Toast
+						    .makeText(getContext(),
+						        "Picture " + picturesTaken + " / "
+						                + maxPictures,
+						        Toast.LENGTH_SHORT)
+						    .show();
+					} else {
+						LOG.debug(
+						    "Picture " + picturesTaken + " / " + maxPictures);
+					}
+					displayPicturesTaken();
+					// set Result
+					resultBundle.putStringArrayList("pictures", pictures);
+					resultIntent.putExtra("data", resultBundle);
+
+					sendNewPictureBroadcast(imageUri);
+					camera.startPreview();
+					safeToTakePicture = true;
+				}
 			} catch (FileNotFoundException e) {
 				LOG.debug("File not found: " + e);
 			} catch (IOException e) {
@@ -170,7 +178,7 @@ public class CamFragment extends Fragment
 
 	private void hideLastPictureButton() {
 		ImageButton pictureReview =
-				(ImageButton) getActivity().findViewById(R.id.pictureReview);
+		        (ImageButton) getActivity().findViewById(R.id.pictureReview);
 		pictureReview.setVisibility(View.INVISIBLE);
 	}
 
@@ -357,7 +365,8 @@ public class CamFragment extends Fragment
 			findOptimalPictureSizeBySize(w, h);
 		} else if (ratio > 0) {
 			bestSize = getLargestResolutionByAspectRatio(
-			    camera.getParameters().getSupportedPictureSizes(), ratio);
+			    camera.getParameters().getSupportedPictureSizes(), ratio,
+			    false);
 			if (bestSize.width == camera.getParameters().getPreviewSize().width
 			        && bestSize.height == camera.getParameters()
 			            .getPreviewSize().height) {
@@ -395,14 +404,19 @@ public class CamFragment extends Fragment
 		double pictureRatio =
 		        (double) pictureSize.width / (double) pictureSize.height;
 		previewSize = getLargestResolutionByAspectRatio(
-		    camera.getParameters().getSupportedPreviewSizes(), pictureRatio);
+		    camera.getParameters().getSupportedPreviewSizes(), pictureRatio,
+		    true);
 		LOG.debug(
 		    "PreviewSize = " + previewSize.width + " x " + previewSize.height);
 		configurePreviewSize(previewSize);
 	}
 
 	public Camera.Size getLargestResolutionByAspectRatio(
-	        List<Camera.Size> sizes, double aspectRatio) {
+	        List<Camera.Size> sizes, double aspectRatio,
+	        boolean previewResolution) {
+		Display display = getActivity().getWindowManager().getDefaultDisplay();
+		Point displaySize = new Point();
+		display.getSize(displaySize);
 		Camera.Size largestSize = camera.getParameters().getPreviewSize();
 		largestSize.width = 0;
 		largestSize.height = 0;
@@ -411,7 +425,12 @@ public class CamFragment extends Fragment
 			if (Math.abs(ratio - aspectRatio) < 0.00000001
 			        && size.width >= largestSize.width
 			        && size.height >= largestSize.height) {
-				largestSize = size;
+				if (previewResolution && size.width <= displaySize.x
+				        && size.height <= displaySize.y) {
+					largestSize = size;
+				} else if (!previewResolution) {
+					largestSize = size;
+				}
 			}
 		}
 		return largestSize;
@@ -725,16 +744,18 @@ public class CamFragment extends Fragment
 				preview.setCamera(camera);
 			}
 		}
-		if (camera.getParameters().isZoomSupported()) {
-			ImageButton btnZoomin =
-			        (ImageButton) getView().findViewById(R.id.btnZoomIn);
-			ImageButton btnZoomOut =
-			        (ImageButton) getView().findViewById(R.id.btnZoomOut);
-			btnZoomin.setVisibility(View.VISIBLE);
-			btnZoomOut.setVisibility(View.VISIBLE);
-			this.maxZoomLevel = camera.getParameters().getMaxZoom();
-			this.currentZoomLevel = 0;
-			viewCurrentZoom();
+		if (camera != null) {
+			if (camera.getParameters().isZoomSupported()) {
+				ImageButton btnZoomin =
+				        (ImageButton) getView().findViewById(R.id.btnZoomIn);
+				ImageButton btnZoomOut =
+				        (ImageButton) getView().findViewById(R.id.btnZoomOut);
+				btnZoomin.setVisibility(View.VISIBLE);
+				btnZoomOut.setVisibility(View.VISIBLE);
+				this.maxZoomLevel = camera.getParameters().getMaxZoom();
+				this.currentZoomLevel = 0;
+				viewCurrentZoom();
+			}
 		}
 		updateFlashModeIcon();
 		initPreview();
@@ -788,14 +809,14 @@ public class CamFragment extends Fragment
 	@Override
 	public boolean onMenuItemClick(MenuItem item) {
 		switch (item.getItemId()) {
-			case R.id.showPrivacyPolicy:
-				Intent intent = new Intent(Intent.ACTION_VIEW,
-				Uri.parse("http://www.evosec.de/datenschutz"));
-				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				startActivity(intent);
-				return true;
-			default:
-				return false;
+		case R.id.showPrivacyPolicy:
+			Intent intent = new Intent(Intent.ACTION_VIEW,
+			    Uri.parse("http://www.evosec.de/datenschutz"));
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(intent);
+			return true;
+		default:
+			return false;
 		}
 	}
 

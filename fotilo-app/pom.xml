@@ -4,7 +4,7 @@
     <parent>
         <groupId>de.evosec</groupId>
         <artifactId>fotilo</artifactId>
-        <version>0.0.12</version>
+        <version>0.0.13</version>
     </parent>
 
     <artifactId>fotilo-app</artifactId>
