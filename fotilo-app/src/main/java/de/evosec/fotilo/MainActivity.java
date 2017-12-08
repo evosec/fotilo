@@ -161,8 +161,12 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		try {
-			((CamFragment) getSupportFragmentManager()
-			    .findFragmentByTag("CamFragment")).onKeyDown(keyCode);
+			if (((CamFragment) getSupportFragmentManager()
+			    .findFragmentByTag("CamFragment")).onKeyDown(keyCode)) {
+				return true;
+			} else {
+				return super.onKeyDown(keyCode, event);
+			}
 		} catch (Exception e) {
 			LOG.debug("onKeyDown() : " + e);
 		}

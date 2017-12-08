@@ -11,13 +11,17 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class ReviewPicturesActivity extends Activity
-        implements View.OnClickListener {
+        implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
 	private static final Logger LOG =
 	        LoggerFactory.getLogger(ReviewPicturesActivity.class);
@@ -40,6 +44,9 @@ public class ReviewPicturesActivity extends Activity
 		RecyclerView.LayoutManager layoutManager =
 		        new GridLayoutManager(getApplicationContext(), 4);
 		pictureGrid.setLayoutManager(layoutManager);
+		ImageButton showMenuButton =
+		        (ImageButton) findViewById(R.id.menuToggle);
+		showMenuButton.setOnClickListener(this);
 		this.btnDelete = (Button) findViewById(R.id.btn_delete);
 		this.btnOk = (Button) findViewById(R.id.btn_ok);
 		this.btnFertig = (Button) findViewById(R.id.btn_done);
@@ -62,8 +69,34 @@ public class ReviewPicturesActivity extends Activity
 		case R.id.btn_done:
 			returnPictures(Activity.RESULT_FIRST_USER);
 			break;
+		case R.id.menuToggle:
+			showMenu();
+			break;
 		default:
 			break;
+		}
+	}
+
+	private void showMenu() {
+		View view = findViewById(R.id.menuToggle);
+		PopupMenu popup = new PopupMenu(this, view);
+		MenuInflater inflater = popup.getMenuInflater();
+		inflater.inflate(R.menu.menu, popup.getMenu());
+		popup.setOnMenuItemClickListener(this);
+		popup.show();
+	}
+
+	@Override
+	public boolean onMenuItemClick(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.showPrivacyPolicy:
+			Intent intent = new Intent(Intent.ACTION_VIEW,
+			    Uri.parse("http://www.evosec.de/datenschutz"));
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(intent);
+			return true;
+		default:
+			return false;
 		}
 	}
 

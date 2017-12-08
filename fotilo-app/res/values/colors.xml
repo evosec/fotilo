@@ -3,6 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-
-    <color name="uiElementBackground">#65AFAFAF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="uiElementBackground">#d2595959</color>
+    <color name="trans">#00afafaf</color>
 </resources>
