@@ -33,6 +33,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.RotateAnimation;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
@@ -65,9 +67,9 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 	private Camera camera;
 	private Preview preview;
 	private DrawingView drawingView;
-	private RadioGroup flashmodes;
 	private ProgressDialog progress;
 	private boolean safeToTakePicture = false;
+	private View view;
 
 	public CamFragment() {
 		// load action sound to avoid latency for first play
@@ -286,7 +288,6 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 		updateFlashModeIcon();
 		Toast.makeText(getContext(), "Flashmode = " + flashMode,
 		    Toast.LENGTH_SHORT).show();
-
 	}
 
 	private void setDefaultFlashmode() {
@@ -478,30 +479,21 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 				takePicture();
 			}
 		} else if (keyCode == KeyEvent.KEYCODE_ZOOM_IN) {
-			if (camera.getParameters().isSmoothZoomSupported()) {
-				Toast.makeText(getContext(), "smoothenable", Toast.LENGTH_SHORT)
-				    .show();
-			}
-			viewCurrentZoom(ZoomUtil.zoomIn(camera),
-			    ZoomUtil.getMaxZoomLevel());
+
 			return true;
 
 		} else if (keyCode == KeyEvent.KEYCODE_ZOOM_OUT) {
-			viewCurrentZoom(ZoomUtil.zoomOut(camera),
-			    ZoomUtil.getMaxZoomLevel());
+
 			return true;
 		} else if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
 
 			zoomBar.setProgress(ZoomUtil.zoomIn(camera));
-			// viewCurrentZoom(ZoomUtil.zoomIn(camera),
-			// ZoomUtil.getMaxZoomLevel());
 
 			return true;
 
 		} else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
 			zoomBar.setProgress(ZoomUtil.zoomOut(camera));
-			// viewCurrentZoom(ZoomUtil.zoomOut(camera),
-			// ZoomUtil.getMaxZoomLevel());
+
 			return true;
 		}
 		return false;
@@ -627,7 +619,6 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 		resultIntent = new Intent();
 		resultBundle = new Bundle();
 		Intent i = getActivity().getIntent();
-
 		// max. Anzahl Bilder von rufender Activity auslesen
 		this.maxPictures = i.getIntExtra("maxPictures", maxPictures);
 
@@ -645,9 +636,10 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 	        Bundle savedInstanceState) {
 		LOG.debug("onCreateView()");
 		LOG.debug("CamFragment");
-		View view = inflater.inflate(R.layout.fragment_cam, container, false);
+		view = inflater.inflate(R.layout.fragment_cam, container, false);
+		Button btnPrivacy = (Button) view.findViewById(R.id.privacy);
+		btnPrivacy.setOnClickListener(this);
 		zoomBar = (SeekBar) view.findViewById(R.id.seekBar);
-
 		ImageButton btnFlashmode =
 		        (ImageButton) view.findViewById(R.id.btn_flashmode);
 		btnFlashmode.setOnClickListener(this);
@@ -659,6 +651,9 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 		ImageButton btnZoomOut =
 		        (ImageButton) view.findViewById(R.id.btnZoomOut);
 		btnZoomOut.setOnClickListener(this);
+		ImageButton btnToggle =
+		        (ImageButton) view.findViewById(R.id.menuToggle);
+		btnToggle.setOnClickListener(this);
 		return view;
 	}
 
@@ -679,7 +674,6 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 				ImageButton btnZoomOut =
 				        (ImageButton) getView().findViewById(R.id.btnZoomOut);
 				zoomBar.setVisibility(View.VISIBLE);
-				zoomBar.setRotation(180);
 
 				btnZoomin.setVisibility(View.VISIBLE);
 				btnZoomOut.setVisibility(View.VISIBLE);
@@ -692,9 +686,6 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 				}
 				ZoomUtil.setMaxZoomLevel(camera.getParameters().getMaxZoom());
 				ZoomUtil.setCurrentZoomLevel(0);
-
-				viewCurrentZoom(ZoomUtil.getCurrentZoomLevel(),
-				    ZoomUtil.getMaxZoomLevel());
 			}
 		}
 		zoomBar.setMax(ZoomUtil.getMaxZoomLevel());
@@ -703,13 +694,6 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 		initPreview();
 		findOptimalPictureSize();
 		initFlashmodes();
-	}
-
-	private void viewCurrentZoom(int currentZoom, int maxZoom) {
-		// TextView txtCurrentZoom =
-		// (TextView) getView().findViewById(R.id.txtCurrentZoom);
-		// txtCurrentZoom.setVisibility(View.VISIBLE);
-		// txtCurrentZoom.setText("Zoom:\n" + currentZoom + " / " + maxZoom);
 	}
 
 	@Override
@@ -732,9 +716,30 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 		case R.id.pictureReview:
 			startReviewPicturesActivity();
 			break;
+		case R.id.menuToggle:
+			showMenu();
+			break;
+		case R.id.privacy:
+			Intent intent = new Intent(Intent.ACTION_VIEW,
+			    Uri.parse("http://www.evosec.de/datenschutz"));
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			((Button) getView().findViewById(R.id.privacy))
+			    .setVisibility(View.INVISIBLE);
+			startActivity(intent);
+			break;
 		default:
 			break;
 		}
+	}
+
+	private void showMenu() {
+		Button btn = (Button) view.findViewById(R.id.privacy);
+		if (btn.getVisibility() == View.VISIBLE) {
+			btn.setVisibility(View.INVISIBLE);
+		} else {
+			btn.setVisibility(View.VISIBLE);
+		}
+
 	}
 
 	@Override
@@ -828,4 +833,52 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 		void onFragmentInteraction(Uri uri);
 	}
 
+	public void rotateLandscape() {
+		ArrayList<View> views = new ArrayList<>();
+		views.add(view.findViewById(R.id.btn_flashmode));
+		views.add(view.findViewById(R.id.btn_capture));
+		views.add(view.findViewById(R.id.pictureReview));
+		views.add(view.findViewById(R.id.btnZoomIn));
+		views.add(view.findViewById(R.id.btnZoomOut));
+		views.add(view.findViewById(R.id.menuToggle));
+		views.add(view.findViewById(R.id.privacy));
+		views.add(view.findViewById(R.id.picturesTaken));
+		for (View btn : views) {
+			if (btn != null) {
+				if (btn.getVisibility() == View.VISIBLE) {
+					RotateAnimation rotateAnimation = new RotateAnimation(270,
+					    360, btn.getPivotX(), btn.getPivotY());
+					rotateAnimation.setDuration(800);
+					btn.startAnimation(rotateAnimation);
+				}
+				btn.setRotation(0);
+			}
+		}
+
+	}
+
+	public void rotatePortrait() {
+		ArrayList<View> views = new ArrayList<>();
+		views.add(view.findViewById(R.id.btn_flashmode));
+		views.add(view.findViewById(R.id.btn_capture));
+		views.add(view.findViewById(R.id.pictureReview));
+		views.add(view.findViewById(R.id.btnZoomIn));
+		views.add(view.findViewById(R.id.btnZoomOut));
+		views.add(view.findViewById(R.id.menuToggle));
+		views.add(view.findViewById(R.id.privacy));
+		views.add(view.findViewById(R.id.picturesTaken));
+
+		for (View btn : views) {
+			if (btn != null) {
+				if (btn.getVisibility() == View.VISIBLE) {
+					RotateAnimation rotateAnimation = new RotateAnimation(90, 0,
+					    btn.getPivotX(), btn.getPivotY());
+					rotateAnimation.setDuration(800);
+					btn.startAnimation(rotateAnimation);
+				}
+				btn.setRotation(270);
+			}
+		}
+
+	}
 }
