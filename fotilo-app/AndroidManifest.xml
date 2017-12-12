@@ -43,7 +43,6 @@
         <activity
             android:name="de.evosec.fotilo.ReviewPicturesActivity"
             android:label="@string/title_activity_review_pictures"
-            android:screenOrientation="landscape"
             android:theme="@style/AppTheme" />
     </application>
 

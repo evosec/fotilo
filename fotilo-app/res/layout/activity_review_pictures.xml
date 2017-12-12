@@ -23,7 +23,8 @@
         android:id="@+id/btn_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
+        android:layout_gravity="center_horizontal|bottom"
+
         android:enabled="true"
         android:text="@string/take_more_pictures" />
 
@@ -31,6 +32,6 @@
         android:id="@+id/btn_done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|bottom"
+        android:layout_gravity="end|bottom"
         android:text="@string/done" />
 </FrameLayout>
