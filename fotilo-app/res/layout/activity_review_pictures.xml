@@ -23,7 +23,8 @@
         android:id="@+id/btn_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
+        android:layout_gravity="center_horizontal|bottom"
+
         android:enabled="true"
         android:text="@string/take_more_pictures" />
 
@@ -31,21 +32,6 @@
         android:id="@+id/btn_done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|bottom"
+        android:layout_gravity="end|bottom"
         android:text="@string/done" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
-        android:layout_marginRight="25dp"
-        android:id="@+id/menuToggle"
-        android:src="@drawable/ic_menu_dots"
-        android:minHeight="50dp"
-        android:minWidth="50dp"
-        android:scaleType="fitXY"
-        android:background="@drawable/roundbackground"
-        android:tint="@color/white"
-
-        android:layout_marginEnd="25dp" />
 </FrameLayout>
