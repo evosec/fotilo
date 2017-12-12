@@ -37,7 +37,6 @@ import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -68,6 +67,8 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 	private Preview preview;
 	private DrawingView drawingView;
 	private ProgressDialog progress;
+	private int maxZoomLevel;
+	private int currentZoomLevel;
 	private boolean safeToTakePicture = false;
 	private View view;
 
@@ -479,21 +480,20 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 				takePicture();
 			}
 		} else if (keyCode == KeyEvent.KEYCODE_ZOOM_IN) {
-
+			zoomIn();
+			zoomBar.setProgress(currentZoomLevel);
 			return true;
-
 		} else if (keyCode == KeyEvent.KEYCODE_ZOOM_OUT) {
-
+			zoomOut();
+			zoomBar.setProgress(currentZoomLevel);
 			return true;
 		} else if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
-
-			zoomBar.setProgress(ZoomUtil.zoomIn(camera));
-
+			zoomIn();
+			zoomBar.setProgress(currentZoomLevel);
 			return true;
-
 		} else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
-			zoomBar.setProgress(ZoomUtil.zoomOut(camera));
-
+			zoomOut();
+			zoomBar.setProgress(currentZoomLevel);
 			return true;
 		}
 		return false;
@@ -684,11 +684,11 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 					zoomBar.getThumb().setColorFilter(0xFFFFFFFF,
 					    PorterDuff.Mode.MULTIPLY);
 				}
-				ZoomUtil.setMaxZoomLevel(camera.getParameters().getMaxZoom());
-				ZoomUtil.setCurrentZoomLevel(0);
+				maxZoomLevel = camera.getParameters().getMaxZoom();
+				currentZoomLevel = 0;
 			}
 		}
-		zoomBar.setMax(ZoomUtil.getMaxZoomLevel());
+		zoomBar.setMax(maxZoomLevel);
 		zoomBar.setOnSeekBarChangeListener(this);
 		updateFlashModeIcon();
 		initPreview();
@@ -708,10 +708,12 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 			}
 			break;
 		case R.id.btnZoomIn:
-			zoomBar.setProgress(ZoomUtil.zoomIn(camera));
+			zoomIn();
+			zoomBar.setProgress(currentZoomLevel);
 			break;
 		case R.id.btnZoomOut:
-			zoomBar.setProgress(ZoomUtil.zoomOut(camera));
+			zoomOut();
+			zoomBar.setProgress(currentZoomLevel);
 			break;
 		case R.id.pictureReview:
 			startReviewPicturesActivity();
@@ -806,7 +808,12 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 	public void onProgressChanged(SeekBar seekBar, int progress,
 	        boolean fromUser) {
 		if (fromUser) {
-			ZoomUtil.updateCurrentZoom(camera, progress);
+			if (camera != null) {
+				currentZoomLevel = progress;
+				Camera.Parameters params = camera.getParameters();
+				params.setZoom(progress);
+				camera.setParameters(params);
+			}
 		}
 	}
 
@@ -831,6 +838,29 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 	public interface OnFragmentInteractionListener {
 
 		void onFragmentInteraction(Uri uri);
+	}
+
+	public void zoomIn() {
+		if (camera != null) {
+			Camera.Parameters params = camera.getParameters();
+			if (currentZoomLevel < maxZoomLevel
+			        && params.getZoom() == currentZoomLevel) {
+				currentZoomLevel++;
+				params.setZoom(currentZoomLevel);
+				camera.setParameters(params);
+			}
+		}
+	}
+
+	public void zoomOut() {
+		if (camera != null) {
+			Camera.Parameters params = camera.getParameters();
+			if (currentZoomLevel > 0 && params.getZoom() == currentZoomLevel) {
+				currentZoomLevel--;
+				params.setZoom(currentZoomLevel);
+				camera.setParameters(params);
+			}
+		}
 	}
 
 	public void rotateLandscape() {
