@@ -11,6 +11,10 @@ import org.slf4j.LoggerFactory;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -19,17 +23,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements SensorEventListener {
 
 	private static final Logger LOG =
 	        LoggerFactory.getLogger(MainActivity.class);
 
 	private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 123;
+	private SensorManager sensorManager;
+	private int orientation = -1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+		sensorManager.registerListener(this,
+		    sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+		    SensorManager.SENSOR_DELAY_NORMAL);
 		if (savedInstanceState == null && checkAndRequestPermissions()) {
 			startCameraFragment();
 		}
@@ -173,4 +184,40 @@ public class MainActivity extends AppCompatActivity {
 		return super.onKeyDown(keyCode, event);
 	}
 
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+		if (event.values[1] < 6.5 && event.values[1] > -6.5) {
+			if (orientation != 1) {
+				// Landscape
+				((CamFragment) getSupportFragmentManager()
+				    .findFragmentByTag("CamFragment")).rotateLandscape();
+			}
+			orientation = 1;
+		} else {
+			if (orientation != 0) {
+				((CamFragment) getSupportFragmentManager()
+				    .findFragmentByTag("CamFragment")).rotatePortrait();
+			}
+			orientation = 0;
+		}
+	}
+
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+	}
+
+	@Override
+	protected void onPause() {
+		sensorManager.unregisterListener(this);
+		super.onPause();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		sensorManager.registerListener(this,
+		    sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+		    SensorManager.SENSOR_DELAY_NORMAL);
+	}
 }
