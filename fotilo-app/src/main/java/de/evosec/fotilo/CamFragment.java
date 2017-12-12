@@ -40,7 +40,6 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass. Activities that contain this fragment
@@ -65,7 +64,6 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 	private Bundle resultBundle;
 	private Camera camera;
 	private Preview preview;
-	private DrawingView drawingView;
 	private ProgressDialog progress;
 	private int maxZoomLevel;
 	private int currentZoomLevel;
@@ -110,14 +108,7 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 					showLastPicture(imageUri);
 					picturesTaken++;
 
-					if (maxPictures > 0) {
-						Toast
-						    .makeText(getContext(),
-						        "Picture " + picturesTaken + " / "
-						                + maxPictures,
-						        Toast.LENGTH_SHORT)
-						    .show();
-					} else {
+					if (maxPictures <= 0){
 						LOG.debug(
 						    "Picture " + picturesTaken + " / " + maxPictures);
 					}
@@ -256,8 +247,6 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 			setDefaultFlashmode();
 			updateFlashModeIcon();
 
-		} else {
-
 		}
 	}
 
@@ -287,8 +276,6 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 		params.setFlashMode(flashMode);
 		camera.setParameters(params);
 		updateFlashModeIcon();
-		Toast.makeText(getContext(), "Flashmode = " + flashMode,
-		    Toast.LENGTH_SHORT).show();
 	}
 
 	private void setDefaultFlashmode() {
@@ -326,8 +313,7 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 				// gefunden
 				String error =
 				        "Fehler: Keine Auflösung mit diesem Seitenverhältnis verfügbar!";
-				Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
-				resultBundle.putString("error", error);
+								resultBundle.putString("error", error);
 				resultIntent.putExtra("data", resultBundle);
 				getActivity().setResult(Activity.RESULT_CANCELED, resultIntent);
 				getActivity().finish();
@@ -462,7 +448,6 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 		} else {
 			// Fehlermeldung zurückgeben
 			String error = "Fehler: Auflösung zu hoch!";
-			Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
 			resultBundle.putString("error", error);
 			resultIntent.putExtra("data", resultBundle);
 			getActivity().setResult(Activity.RESULT_CANCELED, resultIntent);
@@ -515,7 +500,7 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 	}
 
 	private void initPreview() {
-		drawingView = (DrawingView) getView().findViewById(R.id.drawingView);
+		DrawingView drawingView = (DrawingView) getView().findViewById(R.id.drawingView);
 		preview = new Preview(getContext(), camera, drawingView);
 		FrameLayout frameLayout =
 		        (FrameLayout) getView().findViewById(R.id.preview);
