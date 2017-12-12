@@ -108,7 +108,7 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 					showLastPicture(imageUri);
 					picturesTaken++;
 
-					if (maxPictures <= 0){
+					if (maxPictures <= 0) {
 						LOG.debug(
 						    "Picture " + picturesTaken + " / " + maxPictures);
 					}
@@ -313,7 +313,7 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 				// gefunden
 				String error =
 				        "Fehler: Keine Auflösung mit diesem Seitenverhältnis verfügbar!";
-								resultBundle.putString("error", error);
+				resultBundle.putString("error", error);
 				resultIntent.putExtra("data", resultBundle);
 				getActivity().setResult(Activity.RESULT_CANCELED, resultIntent);
 				getActivity().finish();
@@ -500,7 +500,8 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 	}
 
 	private void initPreview() {
-		DrawingView drawingView = (DrawingView) getView().findViewById(R.id.drawingView);
+		DrawingView drawingView =
+		        (DrawingView) getView().findViewById(R.id.drawingView);
 		preview = new Preview(getContext(), camera, drawingView);
 		FrameLayout frameLayout =
 		        (FrameLayout) getView().findViewById(R.id.preview);
