@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/fotilo.iml" filepath="$PROJECT_DIR$/fotilo.iml" />
       <module fileurl="file://$PROJECT_DIR$/fotilo-app/fotilo-app.iml" filepath="$PROJECT_DIR$/fotilo-app/fotilo-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fotilo-library/fotilo-library.iml" filepath="$PROJECT_DIR$/fotilo-library/fotilo-library.iml" />
     </modules>
   </component>
 </project>
