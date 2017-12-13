@@ -2,48 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.evosec.fotilo">
 
-    <uses-sdk
-        android:minSdkVersion="16"
-        android:targetSdkVersion="25" />
-
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:name=".FotiloApplication"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name="de.evosec.fotilo.MainActivity"
-            android:screenOrientation="landscape">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name="de.evosec.fotilo.MainActivity" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.media.action.IMAGE_CAPTURE" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.media.action.STILL_IMAGE_CAMERA" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="de.evosec.fotilo" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="de.evosec.fotilo.ReviewPicturesActivity"
-            android:label="@string/title_activity_review_pictures"
-            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

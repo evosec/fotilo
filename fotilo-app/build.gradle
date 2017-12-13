@@ -1,16 +1,17 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 26
     buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "de.evosec.fotilo"
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -33,13 +34,6 @@ android {
 }
 
 dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.25'
-    compile('com.github.tony19:logback-android-classic:1.1.1-6') {
-        exclude group: 'xpp3', module: 'xpp3'
-        exclude group: 'xerces', module: 'xmlParserAPIs'
-    }
-    compile 'com.android.support:appcompat-v7:25.4.0'
-    compile 'com.android.support:support-v4:25.4.0'
-    compile 'com.android.support:recyclerview-v7:25.4.0'
-    compile 'com.squareup.picasso:picasso:2.5.2'
+    implementation fileTree(dir: 'libs', include: '*.jar')
+    implementation project(':fotilo-library')
 }
