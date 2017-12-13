@@ -9,7 +9,8 @@
     <application>
         <activity
             android:name="de.evosec.fotilo.library.FotiloActivity"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
