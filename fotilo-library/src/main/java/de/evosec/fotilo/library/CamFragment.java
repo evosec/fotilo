@@ -1,4 +1,4 @@
-package de.evosec.fotilo;
+package de.evosec.fotilo.library;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -684,40 +684,32 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.btn_flashmode:
+
+		if (v.getId() == R.id.btn_flashmode) {
 			changeFlashMode();
-			break;
-		case R.id.btn_capture:
+		} else if (v.getId() == R.id.btn_capture) {
 			if (safeToTakePicture) {
 				takePicture();
 			}
-			break;
-		case R.id.btnZoomIn:
+		} else if (v.getId() == R.id.btnZoomIn) {
 			zoomIn();
 			zoomBar.setProgress(currentZoomLevel);
-			break;
-		case R.id.btnZoomOut:
+		} else if (v.getId() == R.id.btnZoomOut) {
 			zoomOut();
 			zoomBar.setProgress(currentZoomLevel);
-			break;
-		case R.id.pictureReview:
+		} else if (v.getId() == R.id.pictureReview) {
 			startReviewPicturesActivity();
-			break;
-		case R.id.menuToggle:
+		} else if (v.getId() == R.id.menuToggle) {
 			showMenu();
-			break;
-		case R.id.privacy:
+		} else if (v.getId() == R.id.privacy) {
 			Intent intent = new Intent(Intent.ACTION_VIEW,
 			    Uri.parse("http://www.evosec.de/datenschutz"));
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			((Button) getView().findViewById(R.id.privacy))
 			    .setVisibility(View.INVISIBLE);
 			startActivity(intent);
-			break;
-		default:
-			break;
 		}
+
 	}
 
 	private void showMenu() {

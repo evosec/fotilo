@@ -1,4 +1,4 @@
-package de.evosec.fotilo;
+package de.evosec.fotilo.library;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +11,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 
 public class ReviewPicturesActivity extends Activity
         implements View.OnClickListener {
@@ -53,19 +49,15 @@ public class ReviewPicturesActivity extends Activity
 
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.btn_delete:
+
+		if (v.getId() == R.id.btn_delete) {
 			deletePictures();
-			break;
-		case R.id.btn_ok:
+		} else if (v.getId() == R.id.btn_ok) {
 			returnPictures(Activity.RESULT_OK);
-			break;
-		case R.id.btn_done:
+		} else if (v.getId() == R.id.btn_done) {
 			returnPictures(Activity.RESULT_FIRST_USER);
-			break;
-		default:
-			break;
 		}
+
 	}
 
 	@Override
