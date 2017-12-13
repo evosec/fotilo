@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
-group = 'com.github.SimonErm'
+group = 'de.evosec'
 android {
     compileSdkVersion 26
 
