@@ -79,15 +79,10 @@
         </dependency>
 
         <dependency>
-            <groupId>com.google.android</groupId>
+            <groupId>android</groupId>
             <artifactId>android</artifactId>
+            <version>7.1.1_r3</version>
             <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>commons-logging</artifactId>
-                    <groupId>commons-logging</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
