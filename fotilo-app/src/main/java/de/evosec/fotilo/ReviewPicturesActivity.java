@@ -11,10 +11,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class ReviewPicturesActivity extends Activity
         implements View.OnClickListener {
@@ -23,9 +27,6 @@ public class ReviewPicturesActivity extends Activity
 	        LoggerFactory.getLogger(ReviewPicturesActivity.class);
 
 	private ArrayList<String> pictureUris;
-	private Button btnOk;
-	private Button btnDelete;
-	private Button btnFertig;
 	private ImageAdapter imageAdapter;
 
 	@Override
@@ -40,9 +41,9 @@ public class ReviewPicturesActivity extends Activity
 		RecyclerView.LayoutManager layoutManager =
 		        new GridLayoutManager(getApplicationContext(), 4);
 		pictureGrid.setLayoutManager(layoutManager);
-		this.btnDelete = (Button) findViewById(R.id.btn_delete);
-		this.btnOk = (Button) findViewById(R.id.btn_ok);
-		this.btnFertig = (Button) findViewById(R.id.btn_done);
+		Button btnDelete = (Button) findViewById(R.id.btn_delete);
+		Button btnOk = (Button) findViewById(R.id.btn_ok);
+		Button btnFertig = (Button) findViewById(R.id.btn_done);
 		btnDelete.setOnClickListener(this);
 		btnOk.setOnClickListener(this);
 		btnFertig.setOnClickListener(this);

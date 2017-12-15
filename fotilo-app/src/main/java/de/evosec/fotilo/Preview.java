@@ -23,7 +23,6 @@ import android.widget.FrameLayout;
 public class Preview extends SurfaceView implements SurfaceHolder.Callback {
 
 	private static final Logger LOG = LoggerFactory.getLogger(Preview.class);
-
 	private final SurfaceHolder surfaceHolder;
 	private Camera camera;
 	private final DrawingView drawingView;
@@ -41,6 +40,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
 
 	public Preview(Context context, Camera camera, DrawingView drawingView) {
 		super(context);
+
 		this.camera = camera;
 		this.drawingView = drawingView;
 		surfaceHolder = getHolder();
@@ -144,6 +144,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
+
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			float x = event.getX();
 			float y = event.getY();
@@ -177,8 +178,8 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
 					drawingView.invalidate();
 				}
 			}, 1000);
-		}
 
+		}
 		return false;
 	}
 
@@ -189,4 +190,5 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
 	public void setCamera(Camera camera) {
 		this.camera = camera;
 	}
+
 }
