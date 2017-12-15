@@ -138,7 +138,7 @@
         android:visibility="invisible" />
 
     <Button
-        android:layout_alignRight="@id/menuToggle"
+        android:layout_alignRight="@+id/menuToggle"
         android:layout_above="@id/btn_capture"
         android:layout_toLeftOf="@id/menuToggle"
         android:visibility="invisible"
@@ -153,7 +153,7 @@
         android:layout_marginRight="25dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/menuToggle"
+        android:id="@id/menuToggle"
         android:tint="@color/white"
         android:src="@drawable/ic_menu_dots"
         android:minHeight="50dp"
