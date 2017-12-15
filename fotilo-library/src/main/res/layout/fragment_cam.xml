@@ -14,7 +14,7 @@
         android:layout_centerInParent="true"
         android:background="#000000">
 
-        <de.evosec.fotilo.library.DrawingView
+        <de.evosec.fotilo.DrawingView
             android:id="@+id/drawingView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
@@ -136,7 +136,7 @@
         android:visibility="invisible" />
 
     <Button
-        android:layout_alignRight="@id/menuToggle"
+        android:layout_alignRight="@+id/menuToggle"
         android:layout_above="@id/btn_capture"
         android:layout_toLeftOf="@id/menuToggle"
         android:visibility="invisible"
