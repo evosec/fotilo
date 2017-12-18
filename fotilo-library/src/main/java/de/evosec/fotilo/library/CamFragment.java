@@ -31,6 +31,7 @@ import android.support.v4.app.Fragment;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.RotateAnimation;
@@ -48,8 +49,9 @@ import android.widget.TextView;
  * {@link CamFragment#newInstance} factory method to create an instance of this
  * fragment.
  */
-public class CamFragment extends Fragment implements View.OnClickListener,
-        Camera.PictureCallback, SeekBar.OnSeekBarChangeListener {
+public class CamFragment extends Fragment
+        implements View.OnClickListener, Camera.PictureCallback,
+        SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
 
 	private static final Logger LOG =
 	        LoggerFactory.getLogger(CamFragment.class);
@@ -69,6 +71,7 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 	private int currentZoomLevel;
 	private boolean safeToTakePicture = false;
 	private View view;
+	private int touchcounter = 0;
 
 	public CamFragment() {
 		// load action sound to avoid latency for first play
@@ -217,7 +220,7 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 	private static File getOutputMediaFile(int type) {
 		File storageDir =
 		        new File(Environment.getExternalStoragePublicDirectory(
-		            Environment.DIRECTORY_PICTURES), "MyCam");
+		            Environment.DIRECTORY_PICTURES), "Fotilo");
 
 		// Wenn Verzeichnis nicht existiert, erstellen
 		if (!storageDir.exists() && !storageDir.mkdirs()) {
@@ -633,10 +636,10 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 		        (ImageButton) view.findViewById(R.id.btn_capture);
 		btnCapture.setOnClickListener(this);
 		ImageButton btnZoomin = (ImageButton) view.findViewById(R.id.btnZoomIn);
-		btnZoomin.setOnClickListener(this);
+		btnZoomin.setOnTouchListener(this);
 		ImageButton btnZoomOut =
 		        (ImageButton) view.findViewById(R.id.btnZoomOut);
-		btnZoomOut.setOnClickListener(this);
+		btnZoomOut.setOnTouchListener(this);
 		ImageButton btnToggle =
 		        (ImageButton) view.findViewById(R.id.menuToggle);
 		btnToggle.setOnClickListener(this);
@@ -691,12 +694,6 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 			if (safeToTakePicture) {
 				takePicture();
 			}
-		} else if (v.getId() == R.id.btnZoomIn) {
-			zoomIn();
-			zoomBar.setProgress(currentZoomLevel);
-		} else if (v.getId() == R.id.btnZoomOut) {
-			zoomOut();
-			zoomBar.setProgress(currentZoomLevel);
 		} else if (v.getId() == R.id.pictureReview) {
 			startReviewPicturesActivity();
 		} else if (v.getId() == R.id.menuToggle) {
@@ -805,6 +802,31 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 
 	}
 
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		if (event.getAction() == MotionEvent.ACTION_DOWN) {
+			touchcounter = 0;
+			v.setPressed(true);
+		}
+		if (v.isPressed()) {
+			if (touchcounter % 8 == 0) {
+				if (v.getId() == R.id.btnZoomIn) {
+					zoomIn();
+					zoomBar.setProgress(currentZoomLevel);
+				} else if (v.getId() == R.id.btnZoomOut) {
+					zoomOut();
+					zoomBar.setProgress(currentZoomLevel);
+				}
+			}
+			touchcounter++;
+		}
+		if (event.getAction() == MotionEvent.ACTION_UP) {
+
+			v.setPressed(false);
+		}
+		return false;
+	}
+
 	/**
 	 * This interface must be implemented by activities that contain this
 	 * fragment to allow an interaction in this fragment to be communicated to
@@ -819,25 +841,33 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 	}
 
 	public void zoomIn() {
+		int jumper;
+		jumper = maxZoomLevel / 4;
+
 		if (camera != null) {
 			Camera.Parameters params = camera.getParameters();
-			if (currentZoomLevel < maxZoomLevel
-			        && params.getZoom() == currentZoomLevel) {
-				currentZoomLevel++;
-				params.setZoom(currentZoomLevel);
-				camera.setParameters(params);
+			if (currentZoomLevel < (maxZoomLevel - jumper)) {
+				currentZoomLevel += jumper;
+			} else {
+				currentZoomLevel = maxZoomLevel;
 			}
+			params.setZoom(currentZoomLevel);
+			camera.setParameters(params);
 		}
 	}
 
 	public void zoomOut() {
+		int jumper;
+		jumper = maxZoomLevel / 4;
 		if (camera != null) {
 			Camera.Parameters params = camera.getParameters();
-			if (currentZoomLevel > 0 && params.getZoom() == currentZoomLevel) {
-				currentZoomLevel--;
-				params.setZoom(currentZoomLevel);
-				camera.setParameters(params);
+			if (currentZoomLevel > jumper) {
+				currentZoomLevel -= jumper;
+			} else {
+				currentZoomLevel = 0;
 			}
+			params.setZoom(currentZoomLevel);
+			camera.setParameters(params);
 		}
 	}
 
