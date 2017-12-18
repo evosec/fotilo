@@ -31,6 +31,7 @@ import android.support.v4.app.Fragment;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.RotateAnimation;
@@ -48,8 +49,9 @@ import android.widget.TextView;
  * {@link CamFragment#newInstance} factory method to create an instance of this
  * fragment.
  */
-public class CamFragment extends Fragment implements View.OnClickListener,
-        Camera.PictureCallback, SeekBar.OnSeekBarChangeListener {
+public class CamFragment extends Fragment
+        implements View.OnClickListener, Camera.PictureCallback,
+        SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
 
 	private static final Logger LOG =
 	        LoggerFactory.getLogger(CamFragment.class);
@@ -633,10 +635,10 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 		        (ImageButton) view.findViewById(R.id.btn_capture);
 		btnCapture.setOnClickListener(this);
 		ImageButton btnZoomin = (ImageButton) view.findViewById(R.id.btnZoomIn);
-		btnZoomin.setOnClickListener(this);
+		btnZoomin.setOnTouchListener(this);
 		ImageButton btnZoomOut =
 		        (ImageButton) view.findViewById(R.id.btnZoomOut);
-		btnZoomOut.setOnClickListener(this);
+		btnZoomOut.setOnTouchListener(this);
 		ImageButton btnToggle =
 		        (ImageButton) view.findViewById(R.id.menuToggle);
 		btnToggle.setOnClickListener(this);
@@ -691,12 +693,6 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 			if (safeToTakePicture) {
 				takePicture();
 			}
-		} else if (v.getId() == R.id.btnZoomIn) {
-			zoomIn();
-			zoomBar.setProgress(currentZoomLevel);
-		} else if (v.getId() == R.id.btnZoomOut) {
-			zoomOut();
-			zoomBar.setProgress(currentZoomLevel);
 		} else if (v.getId() == R.id.pictureReview) {
 			startReviewPicturesActivity();
 		} else if (v.getId() == R.id.menuToggle) {
@@ -803,6 +799,19 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 	@Override
 	public void onStopTrackingTouch(SeekBar seekBar) {
 
+	}
+
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		if (v.getId() == R.id.btnZoomIn) {
+			zoomIn();
+			zoomBar.setProgress(currentZoomLevel);
+		} else if (v.getId() == R.id.btnZoomOut) {
+			zoomOut();
+			zoomBar.setProgress(currentZoomLevel);
+		}
+
+		return false;
 	}
 
 	/**
