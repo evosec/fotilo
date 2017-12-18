@@ -219,7 +219,7 @@ public class CamFragment extends Fragment
 	private static File getOutputMediaFile(int type) {
 		File storageDir =
 		        new File(Environment.getExternalStoragePublicDirectory(
-		            Environment.DIRECTORY_PICTURES), "MyCam");
+		            Environment.DIRECTORY_PICTURES), "Fotilo");
 
 		// Wenn Verzeichnis nicht existiert, erstellen
 		if (!storageDir.exists() && !storageDir.mkdirs()) {
