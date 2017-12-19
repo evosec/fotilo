@@ -1,4 +1,4 @@
-package de.evosec.fotilo;
+package de.evosec.fotilo.library;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -27,10 +27,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.RotateAnimation;
@@ -48,8 +50,9 @@ import android.widget.TextView;
  * {@link CamFragment#newInstance} factory method to create an instance of this
  * fragment.
  */
-public class CamFragment extends Fragment implements View.OnClickListener,
-        Camera.PictureCallback, SeekBar.OnSeekBarChangeListener {
+public class CamFragment extends Fragment
+        implements View.OnClickListener, Camera.PictureCallback,
+        SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
 
 	private static final Logger LOG =
 	        LoggerFactory.getLogger(CamFragment.class);
@@ -69,6 +72,8 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 	private int currentZoomLevel;
 	private boolean safeToTakePicture = false;
 	private View view;
+	private int touchcounter = 0;
+	private int currentZoomParameter;
 
 	public CamFragment() {
 		// load action sound to avoid latency for first play
@@ -217,7 +222,7 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 	private static File getOutputMediaFile(int type) {
 		File storageDir =
 		        new File(Environment.getExternalStoragePublicDirectory(
-		            Environment.DIRECTORY_PICTURES), "MyCam");
+		            Environment.DIRECTORY_PICTURES), "Fotilo");
 
 		// Wenn Verzeichnis nicht existiert, erstellen
 		if (!storageDir.exists() && !storageDir.mkdirs()) {
@@ -455,7 +460,24 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 		}
 	}
 
+	public boolean onKeyUp(int keyCode) {
+		if (keyCode == KeyEvent.KEYCODE_ZOOM_IN) {
+			Camera.Parameters params = camera.getParameters();
+			params.set("zoom-action", "zoom-stop");
+			camera.setParameters(params);
+			return true;
+		} else if (keyCode == KeyEvent.KEYCODE_ZOOM_OUT) {
+			Camera.Parameters params = camera.getParameters();
+			params.set("zoom-action", "zoom-stop");
+			camera.setParameters(params);
+			return true;
+		}
+		return false;
+	}
+
 	public boolean onKeyDown(int keyCode) {
+		Camera.Parameters params = camera.getParameters();
+		updateCurrentZoomParameters();
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			resultIntent.putExtra("data", resultBundle);
 			getActivity().setResult(Activity.RESULT_CANCELED, resultIntent);
@@ -465,12 +487,21 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 				takePicture();
 			}
 		} else if (keyCode == KeyEvent.KEYCODE_ZOOM_IN) {
+			params.set("zoom-action", "optical-tele-start");
+			camera.setParameters(params);
 			zoomIn();
-			zoomBar.setProgress(currentZoomLevel);
+			zoomBar.setProgress(currentZoomParameter);
+			// params.set("zoom-action", "zoom-stop");
+			// camera.setParameters(params);
 			return true;
 		} else if (keyCode == KeyEvent.KEYCODE_ZOOM_OUT) {
+
+			params.set("zoom-action", "optical-wide-start");
+			camera.setParameters(params);
 			zoomOut();
-			zoomBar.setProgress(currentZoomLevel);
+			zoomBar.setProgress(currentZoomParameter);
+			// params.set("zoom-action", "zoom-stop");
+			// camera.setParameters(params);
 			return true;
 		} else if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
 			zoomIn();
@@ -615,6 +646,9 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 		if (preview != null && preview.getCamera() == null) {
 			preview.setCamera(camera);
 		}
+		Camera.Parameters parameters = camera.getParameters();
+		parameters.set("mode", "smart-auto");
+		camera.setParameters(parameters);
 	}
 
 	@Override
@@ -633,10 +667,10 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 		        (ImageButton) view.findViewById(R.id.btn_capture);
 		btnCapture.setOnClickListener(this);
 		ImageButton btnZoomin = (ImageButton) view.findViewById(R.id.btnZoomIn);
-		btnZoomin.setOnClickListener(this);
+		btnZoomin.setOnTouchListener(this);
 		ImageButton btnZoomOut =
 		        (ImageButton) view.findViewById(R.id.btnZoomOut);
-		btnZoomOut.setOnClickListener(this);
+		btnZoomOut.setOnTouchListener(this);
 		ImageButton btnToggle =
 		        (ImageButton) view.findViewById(R.id.menuToggle);
 		btnToggle.setOnClickListener(this);
@@ -665,59 +699,56 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 				btnZoomOut.setVisibility(View.VISIBLE);
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN
 				        && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-					zoomBar.getProgressDrawable().setColorFilter(0xFFFFFFFF,
-					    PorterDuff.Mode.MULTIPLY);
-					zoomBar.getThumb().setColorFilter(0xFFFFFFFF,
-					    PorterDuff.Mode.MULTIPLY);
+					zoomBar.getProgressDrawable().setColorFilter(
+					    getResources().getColor(R.color.uiElementBackground),
+					    PorterDuff.Mode.SRC_IN);
+					// zoomBar.getThumb().setColorFilter(0xFFFFFFFF,
+					// PorterDuff.Mode.SRC_IN);
+					btnZoomin.getBackground().setColorFilter(
+					    getResources().getColor(R.color.shadow),
+					    PorterDuff.Mode.SRC_IN);
+					btnZoomOut.getBackground().setColorFilter(
+					    getResources().getColor(R.color.shadow),
+					    PorterDuff.Mode.SRC_IN);
 				}
-				maxZoomLevel = camera.getParameters().getMaxZoom();
-				currentZoomLevel = 0;
+
 			}
 		}
-		zoomBar.setMax(maxZoomLevel);
-		zoomBar.setOnSeekBarChangeListener(this);
+
 		updateFlashModeIcon();
 		initPreview();
 		findOptimalPictureSize();
 		initFlashmodes();
+		if (camera.getParameters().isZoomSupported()) {
+			maxZoomLevel = camera.getParameters().getMaxZoom();
+			currentZoomLevel = 0;
+			zoomBar.setMax(maxZoomLevel);
+			zoomBar.setOnSeekBarChangeListener(this);
+		}
 	}
 
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.btn_flashmode:
+
+		if (v.getId() == R.id.btn_flashmode) {
 			changeFlashMode();
-			break;
-		case R.id.btn_capture:
+		} else if (v.getId() == R.id.btn_capture) {
 			if (safeToTakePicture) {
 				takePicture();
 			}
-			break;
-		case R.id.btnZoomIn:
-			zoomIn();
-			zoomBar.setProgress(currentZoomLevel);
-			break;
-		case R.id.btnZoomOut:
-			zoomOut();
-			zoomBar.setProgress(currentZoomLevel);
-			break;
-		case R.id.pictureReview:
+		} else if (v.getId() == R.id.pictureReview) {
 			startReviewPicturesActivity();
-			break;
-		case R.id.menuToggle:
+		} else if (v.getId() == R.id.menuToggle) {
 			showMenu();
-			break;
-		case R.id.privacy:
+		} else if (v.getId() == R.id.privacy) {
 			Intent intent = new Intent(Intent.ACTION_VIEW,
 			    Uri.parse("http://www.evosec.de/datenschutz"));
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			((Button) getView().findViewById(R.id.privacy))
 			    .setVisibility(View.INVISIBLE);
 			startActivity(intent);
-			break;
-		default:
-			break;
 		}
+
 	}
 
 	private void showMenu() {
@@ -793,13 +824,26 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int progress,
 	        boolean fromUser) {
+		Camera.Parameters params = camera.getParameters();
+		updateCurrentZoomParameters();
 		if (fromUser) {
 			if (camera != null) {
+				if (progress > currentZoomParameter) {
+					params.set("zoom-action", "fast-tele-start");// ZoomIn
+				} else if (progress < currentZoomParameter) {
+					params.set("zoom-action", "fast-wide-start");// ZoomOut
+				}
+				camera.setParameters(params);
 				currentZoomLevel = progress;
-				Camera.Parameters params = camera.getParameters();
 				params.setZoom(progress);
 				camera.setParameters(params);
+				params.set("zoom-action", "zoom-stop");
+				camera.setParameters(params);
+				updateCurrentZoomParameters();
+				zoomBar.setProgress(currentZoomParameter);
+
 			}
+
 		}
 	}
 
@@ -811,6 +855,51 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 	@Override
 	public void onStopTrackingTouch(SeekBar seekBar) {
 
+	}
+
+	@NonNull
+	private void updateCurrentZoomParameters() {
+		Camera.Parameters params = camera.getParameters();
+		if (params.get("curr_zoom_level") != null) {
+			currentZoomParameter =
+			        Integer.parseInt(params.get("curr_zoom_level"));
+		} else {
+			currentZoomParameter = currentZoomLevel;
+		}
+	}
+
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		Camera.Parameters params = camera.getParameters();
+		updateCurrentZoomParameters();
+		if (event.getAction() == MotionEvent.ACTION_DOWN) {
+			touchcounter = 0;
+			if (v.getId() == R.id.btnZoomIn) {
+				params.set("zoom-action", "optical-tele-start");// ZoomIn
+			} else if (v.getId() == R.id.btnZoomOut) {
+				params.set("zoom-action", "optical-wide-start");// ZoomOut
+			}
+			camera.setParameters(params);
+			v.setPressed(true);
+		}
+		if (v.isPressed()) {
+			if (touchcounter % 2 == 0) {
+				if (v.getId() == R.id.btnZoomIn) {
+					zoomIn();
+				} else if (v.getId() == R.id.btnZoomOut) {
+					zoomOut();
+				}
+			}
+			updateCurrentZoomParameters();
+			zoomBar.setProgress(currentZoomParameter);
+			touchcounter++;
+		}
+		if (event.getAction() == MotionEvent.ACTION_UP) {
+			params.set("zoom-action", "zoom-stop");
+			camera.setParameters(params);
+			v.setPressed(false);
+		}
+		return false;
 	}
 
 	/**
@@ -827,25 +916,34 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 	}
 
 	public void zoomIn() {
+
 		if (camera != null) {
 			Camera.Parameters params = camera.getParameters();
-			if (currentZoomLevel < maxZoomLevel
-			        && params.getZoom() == currentZoomLevel) {
+			updateCurrentZoomParameters();
+			if (currentZoomLevel < (maxZoomLevel)
+			        && currentZoomParameter == currentZoomLevel) {
 				currentZoomLevel++;
-				params.setZoom(currentZoomLevel);
-				camera.setParameters(params);
+			} else {
+				currentZoomLevel = maxZoomLevel;
 			}
+			params.setZoom(currentZoomLevel);
+			camera.setParameters(params);
 		}
 	}
 
 	public void zoomOut() {
+
 		if (camera != null) {
 			Camera.Parameters params = camera.getParameters();
-			if (currentZoomLevel > 0 && params.getZoom() == currentZoomLevel) {
+			updateCurrentZoomParameters();
+			if (currentZoomLevel > 0
+			        && currentZoomParameter == currentZoomLevel) {
 				currentZoomLevel--;
-				params.setZoom(currentZoomLevel);
-				camera.setParameters(params);
+			} else {
+				currentZoomLevel = 0;
 			}
+			params.setZoom(currentZoomLevel);
+			camera.setParameters(params);
 		}
 	}
 
@@ -870,7 +968,6 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 				btn.setRotation(0);
 			}
 		}
-
 	}
 
 	public void rotatePortrait() {
@@ -895,6 +992,6 @@ public class CamFragment extends Fragment implements View.OnClickListener,
 				btn.setRotation(270);
 			}
 		}
-
 	}
+
 }

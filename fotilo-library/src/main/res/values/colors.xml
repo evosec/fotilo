@@ -6,4 +6,5 @@
     <color name="white">#FFFFFF</color>
     <color name="uiElementBackground">#d2595959</color>
     <color name="trans">#00afafaf</color>
+    <color name="shadow">#606060</color>
 </resources>

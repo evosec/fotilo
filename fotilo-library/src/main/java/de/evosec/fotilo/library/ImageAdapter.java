@@ -1,4 +1,4 @@
-package de.evosec.fotilo;
+package de.evosec.fotilo.library;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,27 +50,29 @@ public class ImageAdapter
 	}
 
 	@Override
-	public void onBindViewHolder(ViewHolder holder, final int position) {
-		if (selectedPositions.get(position)) {
+	public void onBindViewHolder(final ViewHolder holder, final int position) {
+		if (selectedPositions.get(holder.getAdapterPosition())) {
 			holder.imageView.setBackgroundColor(Color.BLUE);
 		} else {
 			holder.imageView.setBackgroundColor(Color.TRANSPARENT);
 		}
-		Picasso.with(context).load(Uri.parse(uris.get(position)))
+		Picasso.with(context)
+		    .load(Uri.parse(uris.get(holder.getAdapterPosition())))
 		    .resize(640, 480).centerInside().into(holder.imageView);
 		holder.imageView.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				boolean isSelected = !selectedPositions.get(position);
-				selectedPositions.put(position, isSelected);
+				boolean isSelected =
+				        !selectedPositions.get(holder.getAdapterPosition());
+				selectedPositions.put(holder.getAdapterPosition(), isSelected);
 				if (isSelected) {
-					selectedUris.add(uris.get(position));
+					selectedUris.add(uris.get(holder.getAdapterPosition()));
 				} else {
-					selectedUris.remove(uris.get(position));
+					selectedUris.remove(uris.get(holder.getAdapterPosition()));
 				}
 				btnDelete.setEnabled(!selectedUris.isEmpty());
-				notifyItemChanged(position);
+				notifyItemChanged(holder.getAdapterPosition());
 			}
 		});
 	}
