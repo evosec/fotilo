@@ -968,6 +968,9 @@ public class CamFragment extends Fragment
 				btn.setRotation(0);
 			}
 		}
+		Camera.Parameters params = camera.getParameters();
+		params.setRotation(0);
+		camera.setParameters(params);
 	}
 
 	public void rotatePortrait() {
@@ -992,6 +995,9 @@ public class CamFragment extends Fragment
 				btn.setRotation(270);
 			}
 		}
+		Camera.Parameters params = camera.getParameters();
+		params.setRotation(90);
+		camera.setParameters(params);
 	}
 
 }
