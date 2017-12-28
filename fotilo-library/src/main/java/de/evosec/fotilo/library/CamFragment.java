@@ -12,6 +12,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.squareup.picasso.Picasso;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
@@ -177,10 +179,10 @@ public class CamFragment extends Fragment
 	private void showLastPicture(Uri imageUri) {
 		ImageButton pictureReview =
 		        (ImageButton) getActivity().findViewById(R.id.pictureReview);
+		Picasso.with(getContext()).load(imageUri).resize(100, 100).centerCrop()
+		    .into(pictureReview);
 		pictureReview.setOnClickListener(this);
 		pictureReview.setVisibility(View.VISIBLE);
-		new ShowThumbnailTask(pictureReview, getActivity().getContentResolver())
-		    .execute(imageUri);
 	}
 
 	private void hideLastPictureButton() {
