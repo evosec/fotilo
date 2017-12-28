@@ -21,6 +21,7 @@ import android.database.Cursor;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.hardware.Camera;
+import android.media.ExifInterface;
 import android.media.MediaActionSound;
 import android.net.Uri;
 import android.os.Build;
@@ -74,6 +75,7 @@ public class CamFragment extends Fragment
 	private View view;
 	private int touchcounter = 0;
 	private int currentZoomParameter;
+	private boolean landscape;
 
 	public CamFragment() {
 		// load action sound to avoid latency for first play
@@ -108,6 +110,17 @@ public class CamFragment extends Fragment
 				fos.close();
 				final Uri imageUri =
 				        getImageContentUri(getContext(), pictureFile);
+				if (!landscape) {
+					ExifInterface ef =
+					        new ExifInterface(pictureFile.toString());
+					ef.setAttribute(ExifInterface.TAG_ORIENTATION, 90 + "");
+					ef.saveAttributes();
+
+					ContentValues values = new ContentValues();
+					values.put(MediaStore.Images.Media.ORIENTATION, 90);
+					int rowsUpdated = getContext().getContentResolver()
+					    .update(imageUri, values, null, null);
+				}
 				if (imageUri != null) {
 					pictures.add(imageUri.toString());
 					showLastPicture(imageUri);
@@ -968,6 +981,7 @@ public class CamFragment extends Fragment
 				btn.setRotation(0);
 			}
 		}
+		landscape = true;
 		Camera.Parameters params = camera.getParameters();
 		params.setRotation(0);
 		camera.setParameters(params);
@@ -995,6 +1009,7 @@ public class CamFragment extends Fragment
 				btn.setRotation(270);
 			}
 		}
+		landscape = false;
 		Camera.Parameters params = camera.getParameters();
 		params.setRotation(90);
 		camera.setParameters(params);
