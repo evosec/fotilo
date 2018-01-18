@@ -270,7 +270,7 @@ public class CamFragment extends Fragment
 	public void changeFlashMode() {
 		Camera.Parameters params = camera.getParameters();
 		List<String> supportedFlashModes = params.getSupportedFlashModes();
-		String flashMode = "";
+		String flashMode;
 		switch (params.getFlashMode()) {
 		case Camera.Parameters.FLASH_MODE_AUTO:
 			flashMode = Camera.Parameters.FLASH_MODE_ON;
@@ -318,7 +318,7 @@ public class CamFragment extends Fragment
 		h = i.getIntExtra("height", h);
 		ratio = i.getDoubleExtra("aspectratio", ratio);
 		LOG.debug("w = {}; h = {}; ratio = {}", w, h, ratio);
-		Camera.Size bestSize = null;
+		Camera.Size bestSize;
 		if (w > 0 && h > 0) {
 			// Mindestauflösung setzen
 			findOptimalPictureSizeBySize(w, h);
@@ -443,7 +443,7 @@ public class CamFragment extends Fragment
 
 	private void findOptimalPictureSizeBySize(int w, int h) {
 		Camera.Parameters params = camera.getParameters();
-		double tempDiff = 0;
+		double tempDiff;
 		double diff = Integer.MAX_VALUE;
 		Camera.Size bestSize = null;
 		for (Camera.Size supportedSize : params.getSupportedPictureSizes()) {
