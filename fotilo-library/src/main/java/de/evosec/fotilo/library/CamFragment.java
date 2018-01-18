@@ -337,7 +337,7 @@ public class CamFragment extends Fragment
 				return;
 			}
 			configurePictureSize(bestSize, params);
-			LOG.debug(bestSize.width + " x " + bestSize.height);
+			LOG.debug("{} x {}", bestSize.width, bestSize.height);
 		} else {
 			// keine Auflösung vorgegeben: höchste 4:3 Auflösung wählen
 			configureLargestFourToThreeRatioPictureSize();
