@@ -505,8 +505,6 @@ public class CamFragment extends Fragment
 			camera.setParameters(params);
 			zoomIn();
 			zoomBar.setProgress(currentZoomParameter);
-			// params.set("zoom-action", "zoom-stop");
-			// camera.setParameters(params);
 			return true;
 		} else if (keyCode == KeyEvent.KEYCODE_ZOOM_OUT) {
 
@@ -514,8 +512,6 @@ public class CamFragment extends Fragment
 			camera.setParameters(params);
 			zoomOut();
 			zoomBar.setProgress(currentZoomParameter);
-			// params.set("zoom-action", "zoom-stop");
-			// camera.setParameters(params);
 			return true;
 		} else if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
 			zoomIn();
@@ -715,8 +711,6 @@ public class CamFragment extends Fragment
 				zoomBar.getProgressDrawable().setColorFilter(
 				    getResources().getColor(R.color.uiElementBackground),
 				    PorterDuff.Mode.SRC_IN);
-				// zoomBar.getThumb().setColorFilter(0xFFFFFFFF,
-				// PorterDuff.Mode.SRC_IN);
 				btnZoomin.getBackground().setColorFilter(
 				    getResources().getColor(R.color.shadow),
 				    PorterDuff.Mode.SRC_IN);
