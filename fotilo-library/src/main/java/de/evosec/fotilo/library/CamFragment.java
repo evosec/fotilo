@@ -121,8 +121,8 @@ public class CamFragment extends Fragment
 
 					ContentValues values = new ContentValues();
 					values.put(MediaStore.Images.Media.ORIENTATION, 90);
-					int rowsUpdated = getContext().getContentResolver()
-					    .update(imageUri, values, null, null);
+					getContext().getContentResolver().update(imageUri, values,
+					    null, null);
 				}
 				if (imageUri != null) {
 					pictures.add(imageUri.toString());
