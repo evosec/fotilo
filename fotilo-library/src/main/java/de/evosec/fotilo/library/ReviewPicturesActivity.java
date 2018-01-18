@@ -62,12 +62,8 @@ public class ReviewPicturesActivity extends Activity
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		switch (keyCode) {
-		case KeyEvent.KEYCODE_BACK:
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			returnPictures(Activity.RESULT_OK);
-			break;
-		default:
-			break;
 		}
 		return super.onKeyDown(keyCode, event);
 	}

@@ -73,13 +73,9 @@ public class FotiloActivity extends AppCompatActivity
 	public void onRequestPermissionsResult(int requestCode,
 	        String[] permissions, int[] grantResults) {
 		LOG.debug("Permission callback called-------");
-		switch (requestCode) {
-		case REQUEST_ID_MULTIPLE_PERMISSIONS:
+		if (requestCode == REQUEST_ID_MULTIPLE_PERMISSIONS) {
 			handleMultiplePermissionsRequest(requestCode, permissions,
 			    grantResults);
-			break;
-		default:
-			break;
 		}
 	}
 
