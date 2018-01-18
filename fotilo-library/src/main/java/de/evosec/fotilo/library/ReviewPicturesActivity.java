@@ -31,15 +31,14 @@ public class ReviewPicturesActivity extends Activity
 		setContentView(R.layout.activity_review_pictures);
 		Bundle bundle = getIntent().getBundleExtra("data");
 		pictureUris = bundle.getStringArrayList("pictures");
-		final RecyclerView pictureGrid =
-		        (RecyclerView) findViewById(R.id.recycler_view);
+		final RecyclerView pictureGrid = findViewById(R.id.recycler_view);
 		pictureGrid.setHasFixedSize(true);
 		RecyclerView.LayoutManager layoutManager =
 		        new GridLayoutManager(getApplicationContext(), 4);
 		pictureGrid.setLayoutManager(layoutManager);
-		Button btnDelete = (Button) findViewById(R.id.btn_delete);
-		Button btnOk = (Button) findViewById(R.id.btn_ok);
-		Button btnFertig = (Button) findViewById(R.id.btn_done);
+		Button btnDelete = findViewById(R.id.btn_delete);
+		Button btnOk = findViewById(R.id.btn_ok);
+		Button btnFertig = findViewById(R.id.btn_done);
 		btnDelete.setOnClickListener(this);
 		btnOk.setOnClickListener(this);
 		btnFertig.setOnClickListener(this);

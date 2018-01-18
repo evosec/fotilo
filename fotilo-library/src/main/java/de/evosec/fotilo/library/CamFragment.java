@@ -168,7 +168,7 @@ public class CamFragment extends Fragment
 
 	private void displayPicturesTaken() {
 		TextView txtpicturesTaken =
-		        (TextView) getActivity().findViewById(R.id.picturesTaken);
+		        getActivity().findViewById(R.id.picturesTaken);
 		if (picturesTaken > 0) {
 			txtpicturesTaken.setVisibility(View.VISIBLE);
 		} else {
@@ -179,7 +179,7 @@ public class CamFragment extends Fragment
 
 	private void showLastPicture(Uri imageUri) {
 		ImageButton pictureReview =
-		        (ImageButton) getActivity().findViewById(R.id.pictureReview);
+		        getActivity().findViewById(R.id.pictureReview);
 		Picasso.with(getContext()).load(imageUri).resize(100, 100).centerCrop()
 		    .into(pictureReview);
 		pictureReview.setOnClickListener(this);
@@ -188,7 +188,7 @@ public class CamFragment extends Fragment
 
 	private void hideLastPictureButton() {
 		ImageButton pictureReview =
-		        (ImageButton) getActivity().findViewById(R.id.pictureReview);
+		        getActivity().findViewById(R.id.pictureReview);
 		pictureReview.setVisibility(View.INVISIBLE);
 	}
 
@@ -403,8 +403,7 @@ public class CamFragment extends Fragment
 		preview.getLayoutParams().width = bestPreviewSize.width;
 		preview.getLayoutParams().height = bestPreviewSize.height;
 
-		FrameLayout frameLayout =
-		        (FrameLayout) getView().findViewById(R.id.preview);
+		FrameLayout frameLayout = getView().findViewById(R.id.preview);
 		RelativeLayout.LayoutParams layoutPreviewParams =
 		        (RelativeLayout.LayoutParams) frameLayout.getLayoutParams();
 		layoutPreviewParams.width = bestPreviewSize.width;
@@ -540,18 +539,15 @@ public class CamFragment extends Fragment
 	}
 
 	private void initPreview() {
-		DrawingView drawingView =
-		        (DrawingView) getView().findViewById(R.id.drawingView);
+		DrawingView drawingView = getView().findViewById(R.id.drawingView);
 		preview = new Preview(getContext(), camera, drawingView);
-		FrameLayout frameLayout =
-		        (FrameLayout) getView().findViewById(R.id.preview);
+		FrameLayout frameLayout = getView().findViewById(R.id.preview);
 		frameLayout.addView(preview);
 		safeToTakePicture = true;
 	}
 
 	private void updateFlashModeIcon() {
-		ImageButton btnFlashmode =
-		        (ImageButton) getView().findViewById(R.id.btn_flashmode);
+		ImageButton btnFlashmode = getView().findViewById(R.id.btn_flashmode);
 		if (camera.getParameters().getSupportedFlashModes() != null) {
 			switch (camera.getParameters().getFlashMode()) {
 			case Camera.Parameters.FLASH_MODE_AUTO:
@@ -668,22 +664,18 @@ public class CamFragment extends Fragment
 		LOG.debug("onCreateView()");
 		LOG.debug("CamFragment");
 		view = inflater.inflate(R.layout.fragment_cam, container, false);
-		Button btnPrivacy = (Button) view.findViewById(R.id.privacy);
+		Button btnPrivacy = view.findViewById(R.id.privacy);
 		btnPrivacy.setOnClickListener(this);
-		zoomBar = (SeekBar) view.findViewById(R.id.seekBar);
-		ImageButton btnFlashmode =
-		        (ImageButton) view.findViewById(R.id.btn_flashmode);
+		zoomBar = view.findViewById(R.id.seekBar);
+		ImageButton btnFlashmode = view.findViewById(R.id.btn_flashmode);
 		btnFlashmode.setOnClickListener(this);
-		ImageButton btnCapture =
-		        (ImageButton) view.findViewById(R.id.btn_capture);
+		ImageButton btnCapture = view.findViewById(R.id.btn_capture);
 		btnCapture.setOnClickListener(this);
-		ImageButton btnZoomin = (ImageButton) view.findViewById(R.id.btnZoomIn);
+		ImageButton btnZoomin = view.findViewById(R.id.btnZoomIn);
 		btnZoomin.setOnTouchListener(this);
-		ImageButton btnZoomOut =
-		        (ImageButton) view.findViewById(R.id.btnZoomOut);
+		ImageButton btnZoomOut = view.findViewById(R.id.btnZoomOut);
 		btnZoomOut.setOnTouchListener(this);
-		ImageButton btnToggle =
-		        (ImageButton) view.findViewById(R.id.menuToggle);
+		ImageButton btnToggle = view.findViewById(R.id.menuToggle);
 		btnToggle.setOnClickListener(this);
 		return view;
 	}
@@ -755,7 +747,7 @@ public class CamFragment extends Fragment
 	}
 
 	private void showMenu() {
-		Button btn = (Button) view.findViewById(R.id.privacy);
+		Button btn = view.findViewById(R.id.privacy);
 		if (btn.getVisibility() == View.VISIBLE) {
 			btn.setVisibility(View.INVISIBLE);
 		} else {
