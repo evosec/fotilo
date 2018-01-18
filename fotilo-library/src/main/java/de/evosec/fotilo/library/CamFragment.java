@@ -661,9 +661,11 @@ public class CamFragment extends Fragment
 		if (preview != null && preview.getCamera() == null) {
 			preview.setCamera(camera);
 		}
-		Camera.Parameters parameters = camera.getParameters();
-		parameters.set("mode", "smart-auto");
-		camera.setParameters(parameters);
+		if (camera != null) {
+			Camera.Parameters parameters = camera.getParameters();
+			parameters.set("mode", "smart-auto");
+			camera.setParameters(parameters);
+		}
 	}
 
 	@Override
