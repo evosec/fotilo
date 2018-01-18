@@ -801,30 +801,24 @@ public class CamFragment extends Fragment
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
-		case REVIEW_PICTURES_ACTIVITY_REQUEST:
-			if (resultCode == Activity.RESULT_OK
-			        || resultCode == Activity.RESULT_FIRST_USER) {
-				Bundle bundle = data.getBundleExtra("data");
-				this.pictures = bundle.getStringArrayList("pictures");
-				this.picturesTaken = this.pictures.size();
-				if (!pictures.isEmpty()) {
-					showLastPicture(
-					    Uri.parse(this.pictures.get(pictures.size() - 1)));
-				} else {
-					hideLastPictureButton();
-				}
-				displayPicturesTaken();
-				if (resultCode == Activity.RESULT_FIRST_USER) {
-					resultIntent.putExtra("data", resultBundle);
-					getActivity().setResult(Activity.RESULT_CANCELED,
-					    resultIntent);
-					getActivity().finish();
-				}
+		if (requestCode == REVIEW_PICTURES_ACTIVITY_REQUEST
+		        && (resultCode == Activity.RESULT_OK
+		                || resultCode == Activity.RESULT_FIRST_USER)) {
+			Bundle bundle = data.getBundleExtra("data");
+			this.pictures = bundle.getStringArrayList("pictures");
+			this.picturesTaken = this.pictures.size();
+			if (!pictures.isEmpty()) {
+				showLastPicture(
+				    Uri.parse(this.pictures.get(pictures.size() - 1)));
+			} else {
+				hideLastPictureButton();
 			}
-			break;
-		default:
-			break;
+			displayPicturesTaken();
+			if (resultCode == Activity.RESULT_FIRST_USER) {
+				resultIntent.putExtra("data", resultBundle);
+				getActivity().setResult(Activity.RESULT_CANCELED, resultIntent);
+				getActivity().finish();
+			}
 		}
 	}
 
