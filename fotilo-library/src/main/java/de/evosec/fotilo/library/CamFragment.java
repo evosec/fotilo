@@ -289,6 +289,9 @@ public class CamFragment extends Fragment
 		case Camera.Parameters.FLASH_MODE_RED_EYE:
 			flashMode = Camera.Parameters.FLASH_MODE_AUTO;
 			break;
+		default:
+			flashMode = Camera.Parameters.FLASH_MODE_AUTO;
+			break;
 		}
 		params.setFlashMode(flashMode);
 		camera.setParameters(params);
