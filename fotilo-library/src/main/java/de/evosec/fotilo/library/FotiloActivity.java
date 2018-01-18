@@ -168,12 +168,9 @@ public class FotiloActivity extends AppCompatActivity
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 		try {
-			if (((CamFragment) getSupportFragmentManager()
-			    .findFragmentByTag("CamFragment")).onKeyUp(keyCode)) {
-				return true;
-			} else {
-				return super.onKeyUp(keyCode, event);
-			}
+			return ((CamFragment) getSupportFragmentManager()
+			    .findFragmentByTag("CamFragment")).onKeyUp(keyCode)
+			        || super.onKeyUp(keyCode, event);
 		} catch (Exception e) {
 			LOG.debug("onKeyUp()", e);
 		}
@@ -183,12 +180,9 @@ public class FotiloActivity extends AppCompatActivity
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		try {
-			if (((CamFragment) getSupportFragmentManager()
-			    .findFragmentByTag("CamFragment")).onKeyDown(keyCode)) {
-				return true;
-			} else {
-				return super.onKeyDown(keyCode, event);
-			}
+			return ((CamFragment) getSupportFragmentManager()
+			    .findFragmentByTag("CamFragment")).onKeyDown(keyCode)
+			        || super.onKeyDown(keyCode, event);
 		} catch (Exception e) {
 			LOG.debug("onKeyDown()", e);
 		}
