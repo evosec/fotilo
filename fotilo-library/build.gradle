@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-group = 'com.github.SimonErm'
 android {
     compileSdkVersion 25
 
