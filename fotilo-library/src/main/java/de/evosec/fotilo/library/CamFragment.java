@@ -830,24 +830,20 @@ public class CamFragment extends Fragment
 	        boolean fromUser) {
 		Camera.Parameters params = camera.getParameters();
 		updateCurrentZoomParameters();
-		if (fromUser) {
-			if (camera != null) {
-				if (progress > currentZoomParameter) {
-					params.set("zoom-action", "fast-tele-start");// ZoomIn
-				} else if (progress < currentZoomParameter) {
-					params.set("zoom-action", "fast-wide-start");// ZoomOut
-				}
-				camera.setParameters(params);
-				currentZoomLevel = progress;
-				params.setZoom(progress);
-				camera.setParameters(params);
-				params.set("zoom-action", "zoom-stop");
-				camera.setParameters(params);
-				updateCurrentZoomParameters();
-				zoomBar.setProgress(currentZoomParameter);
-
+		if (fromUser && camera != null) {
+			if (progress > currentZoomParameter) {
+				params.set("zoom-action", "fast-tele-start");// ZoomIn
+			} else if (progress < currentZoomParameter) {
+				params.set("zoom-action", "fast-wide-start");// ZoomOut
 			}
-
+			camera.setParameters(params);
+			currentZoomLevel = progress;
+			params.setZoom(progress);
+			camera.setParameters(params);
+			params.set("zoom-action", "zoom-stop");
+			camera.setParameters(params);
+			updateCurrentZoomParameters();
+			zoomBar.setProgress(currentZoomParameter);
 		}
 	}
 
