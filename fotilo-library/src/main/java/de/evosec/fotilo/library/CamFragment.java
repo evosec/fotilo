@@ -396,8 +396,10 @@ public class CamFragment extends Fragment
 	public void configurePreviewSize(Camera.Size bestPreviewSize) {
 		Display display = getActivity().getWindowManager().getDefaultDisplay();
 		Camera.Parameters params = camera.getParameters();
-		int screenWidth = display.getWidth();
-		int screenHeight = display.getHeight();
+		Point size = new Point();
+		display.getSize(size);
+		int screenWidth = size.x;
+		int screenHeight = size.y;
 		params.setPreviewSize(bestPreviewSize.width, bestPreviewSize.height);
 		camera.setParameters(params);
 		preview.getLayoutParams().width = bestPreviewSize.width;
