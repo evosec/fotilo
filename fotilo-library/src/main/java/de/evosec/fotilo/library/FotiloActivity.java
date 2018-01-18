@@ -16,6 +16,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -71,7 +72,7 @@ public class FotiloActivity extends AppCompatActivity
 
 	@Override
 	public void onRequestPermissionsResult(int requestCode,
-	        String[] permissions, int[] grantResults) {
+	        @NonNull String[] permissions, @NonNull int[] grantResults) {
 		LOG.debug("Permission callback called-------");
 		if (requestCode == REQUEST_ID_MULTIPLE_PERMISSIONS) {
 			handleMultiplePermissionsRequest(permissions, grantResults);
