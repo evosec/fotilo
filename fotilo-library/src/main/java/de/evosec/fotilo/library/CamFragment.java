@@ -700,31 +700,26 @@ public class CamFragment extends Fragment
 				preview.setCamera(camera);
 			}
 		}
-		if (camera != null) {
-			if (camera.getParameters().isZoomSupported()) {
-				ImageButton btnZoomin =
-				        (ImageButton) getView().findViewById(R.id.btnZoomIn);
-				ImageButton btnZoomOut =
-				        (ImageButton) getView().findViewById(R.id.btnZoomOut);
-				zoomBar.setVisibility(View.VISIBLE);
+		if (camera != null && camera.getParameters().isZoomSupported()) {
+			ImageButton btnZoomin = getView().findViewById(R.id.btnZoomIn);
+			ImageButton btnZoomOut = getView().findViewById(R.id.btnZoomOut);
+			zoomBar.setVisibility(View.VISIBLE);
 
-				btnZoomin.setVisibility(View.VISIBLE);
-				btnZoomOut.setVisibility(View.VISIBLE);
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN
-				        && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-					zoomBar.getProgressDrawable().setColorFilter(
-					    getResources().getColor(R.color.uiElementBackground),
-					    PorterDuff.Mode.SRC_IN);
-					// zoomBar.getThumb().setColorFilter(0xFFFFFFFF,
-					// PorterDuff.Mode.SRC_IN);
-					btnZoomin.getBackground().setColorFilter(
-					    getResources().getColor(R.color.shadow),
-					    PorterDuff.Mode.SRC_IN);
-					btnZoomOut.getBackground().setColorFilter(
-					    getResources().getColor(R.color.shadow),
-					    PorterDuff.Mode.SRC_IN);
-				}
-
+			btnZoomin.setVisibility(View.VISIBLE);
+			btnZoomOut.setVisibility(View.VISIBLE);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN
+			        && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+				zoomBar.getProgressDrawable().setColorFilter(
+				    getResources().getColor(R.color.uiElementBackground),
+				    PorterDuff.Mode.SRC_IN);
+				// zoomBar.getThumb().setColorFilter(0xFFFFFFFF,
+				// PorterDuff.Mode.SRC_IN);
+				btnZoomin.getBackground().setColorFilter(
+				    getResources().getColor(R.color.shadow),
+				    PorterDuff.Mode.SRC_IN);
+				btnZoomOut.getBackground().setColorFilter(
+				    getResources().getColor(R.color.shadow),
+				    PorterDuff.Mode.SRC_IN);
 			}
 		}
 
