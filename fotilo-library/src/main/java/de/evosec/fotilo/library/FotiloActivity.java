@@ -74,13 +74,12 @@ public class FotiloActivity extends AppCompatActivity
 	        String[] permissions, int[] grantResults) {
 		LOG.debug("Permission callback called-------");
 		if (requestCode == REQUEST_ID_MULTIPLE_PERMISSIONS) {
-			handleMultiplePermissionsRequest(requestCode, permissions,
-			    grantResults);
+			handleMultiplePermissionsRequest(permissions, grantResults);
 		}
 	}
 
-	private void handleMultiplePermissionsRequest(int requestCode,
-	        String[] permissions, int[] grantResults) {
+	private void handleMultiplePermissionsRequest(String[] permissions,
+	        int[] grantResults) {
 		Map<String, Integer> perms = new HashMap<>();
 		// Initialize the map with both permissions
 		perms.put(Manifest.permission.CAMERA,
