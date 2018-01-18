@@ -356,12 +356,11 @@ public class CamFragment extends Fragment
 
 	public void scalePreviewSize() {
 		Camera.Size pictureSize = camera.getParameters().getPictureSize();
-		Camera.Size previewSize = camera.getParameters().getPreviewSize();
 		LOG.debug("PictureSize = {} x {}", pictureSize.width,
 		    pictureSize.height);
 		double pictureRatio =
 		        (double) pictureSize.width / (double) pictureSize.height;
-		previewSize = getLargestResolutionByAspectRatio(
+		Camera.Size previewSize = getLargestResolutionByAspectRatio(
 		    camera.getParameters().getSupportedPreviewSizes(), pictureRatio,
 		    true);
 		LOG.debug("PreviewSize = {} x {}", previewSize.width,
