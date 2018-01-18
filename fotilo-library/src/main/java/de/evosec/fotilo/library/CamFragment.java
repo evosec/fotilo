@@ -661,8 +661,8 @@ public class CamFragment extends Fragment
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	        Bundle savedInstanceState) {
+	public View onCreateView(@NonNull LayoutInflater inflater,
+	        ViewGroup container, Bundle savedInstanceState) {
 		LOG.debug("onCreateView()");
 		LOG.debug("CamFragment");
 		view = inflater.inflate(R.layout.fragment_cam, container, false);
@@ -774,7 +774,7 @@ public class CamFragment extends Fragment
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
+	public void onSaveInstanceState(@NonNull Bundle outState) {
 		outState.putStringArrayList("pictures", pictures);
 		outState.putInt("maxPictures", maxPictures);
 		outState.putInt("picturesTaken", picturesTaken);
