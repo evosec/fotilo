@@ -25,10 +25,10 @@ dependencies {
     compile('com.github.tony19:logback-android-classic:1.1.1-6') {
         exclude group: 'com.google.android', module: 'android'
     }
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.android.support:support-v4:25.1.0'
-    compile 'com.android.support:recyclerview-v7:25.1.0'
+    compile 'com.android.support:appcompat-v7:27.0.2'
+    compile 'com.android.support:support-v4:27.0.2'
+    compile 'com.android.support:recyclerview-v7:27.0.2'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:appcompat-v7:27.0.2'
 
 }
