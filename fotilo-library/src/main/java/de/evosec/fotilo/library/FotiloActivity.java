@@ -179,7 +179,7 @@ public class FotiloActivity extends AppCompatActivity
 				return super.onKeyUp(keyCode, event);
 			}
 		} catch (Exception e) {
-			LOG.debug("onKeyUp() : " + e);
+			LOG.debug("onKeyUp()", e);
 		}
 		return super.onKeyUp(keyCode, event);
 	}
@@ -194,7 +194,7 @@ public class FotiloActivity extends AppCompatActivity
 				return super.onKeyDown(keyCode, event);
 			}
 		} catch (Exception e) {
-			LOG.debug("onKeyDown() : " + e);
+			LOG.debug("onKeyDown()", e);
 		}
 		return super.onKeyDown(keyCode, event);
 	}

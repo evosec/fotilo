@@ -84,7 +84,7 @@ public class ReviewPicturesActivity extends Activity
 	private void deletePictures() {
 		List<String> selectedPictureUris = imageAdapter.getSelectedUris();
 		for (String uri : selectedPictureUris) {
-			LOG.debug("Picture deleted: " + uri);
+			LOG.debug("Picture deleted: {}", uri);
 			getContentResolver().delete(Uri.parse(uri), null, null);
 		}
 		this.pictureUris.removeAll(selectedPictureUris);

@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -129,8 +130,8 @@ public class CamFragment extends Fragment
 					picturesTaken++;
 
 					if (maxPictures <= 0) {
-						LOG.debug(
-						    "Picture " + picturesTaken + " / " + maxPictures);
+						LOG.debug("Picture {} / {}", picturesTaken,
+						    maxPictures);
 					}
 					displayPicturesTaken();
 					// set Result
@@ -142,15 +143,15 @@ public class CamFragment extends Fragment
 					safeToTakePicture = true;
 				}
 			} catch (FileNotFoundException e) {
-				LOG.debug("File not found: " + e);
+				LOG.debug("File not found", e);
 			} catch (IOException e) {
-				LOG.debug("Error accessing file: " + e);
+				LOG.debug("Error accessing file", e);
 			} finally {
 				if (fos != null) {
 					try {
 						fos.close();
 					} catch (IOException e) {
-						LOG.debug("" + e);
+						LOG.debug("unable to close file output stream", e);
 					}
 				}
 				progress.dismiss();
@@ -193,11 +194,7 @@ public class CamFragment extends Fragment
 
 	private void sendNewPictureBroadcast(Uri imageUri) {
 		Intent intent = new Intent("com.android.camera.NEW_PICTURE");
-		try {
-			intent.setData(imageUri);
-		} catch (Exception e) {
-			LOG.debug("" + e);
-		}
+		intent.setData(imageUri);
 		getActivity().sendBroadcast(intent);
 	}
 
@@ -246,8 +243,8 @@ public class CamFragment extends Fragment
 		}
 
 		// Dateinamen erzeugen
-		String timeStmp =
-		        new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+		String timeStmp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US)
+		    .format(new Date());
 		File mediaFile;
 		if (type == MEDIA_TYPE_IMAGE) {
 			mediaFile = new File(storageDir.getPath() + File.separator + "IMG_"
@@ -317,7 +314,7 @@ public class CamFragment extends Fragment
 		w = i.getIntExtra("width", w);
 		h = i.getIntExtra("height", h);
 		ratio = i.getDoubleExtra("aspectratio", ratio);
-		LOG.debug("w = " + w + "; h = " + h + "; ratio = " + ratio);
+		LOG.debug("w = {}; h = {}; ratio = {}", w, h, ratio);
 		Camera.Size bestSize = null;
 		if (w > 0 && h > 0) {
 			// Mindestauflösung setzen
@@ -357,15 +354,15 @@ public class CamFragment extends Fragment
 	public void scalePreviewSize() {
 		Camera.Size pictureSize = camera.getParameters().getPictureSize();
 		Camera.Size previewSize = camera.getParameters().getPreviewSize();
-		LOG.debug(
-		    "PictureSize = " + pictureSize.width + " x " + pictureSize.height);
+		LOG.debug("PictureSize = {} x {}", pictureSize.width,
+		    pictureSize.height);
 		double pictureRatio =
 		        (double) pictureSize.width / (double) pictureSize.height;
 		previewSize = getLargestResolutionByAspectRatio(
 		    camera.getParameters().getSupportedPreviewSizes(), pictureRatio,
 		    true);
-		LOG.debug(
-		    "PreviewSize = " + previewSize.width + " x " + previewSize.height);
+		LOG.debug("PreviewSize = {} x {}", previewSize.width,
+		    previewSize.height);
 		configurePreviewSize(previewSize);
 	}
 
@@ -413,10 +410,9 @@ public class CamFragment extends Fragment
 		layoutPreviewParams.addRule(RelativeLayout.CENTER_IN_PARENT);
 		frameLayout.setLayoutParams(layoutPreviewParams);
 
-		LOG.debug("screenSize = " + screenWidth + " x " + screenHeight);
-
-		LOG.debug("PreviewSize = " + bestPreviewSize.width + " x "
-		        + bestPreviewSize.height);
+		LOG.debug("screenSize = {} x {}", screenWidth, screenHeight);
+		LOG.debug("PreviewSize = {} x {}", bestPreviewSize.width,
+		    bestPreviewSize.height);
 	}
 
 	private void configureLargestFourToThreeRatioPictureSize() {
@@ -439,7 +435,7 @@ public class CamFragment extends Fragment
 		params.setPictureSize(bestSize.width, bestSize.height);
 		camera.setParameters(params);
 		configurePictureSize(bestSize, params);
-		LOG.debug(bestSize.width + " x " + bestSize.height);
+		LOG.debug("{} x {}", bestSize.width, bestSize.height);
 	}
 
 	private void findOptimalPictureSizeBySize(int w, int h) {
@@ -464,7 +460,7 @@ public class CamFragment extends Fragment
 		// beste Auflösung setzen
 		if (bestSize != null) {
 			configurePictureSize(bestSize, params);
-			LOG.debug(bestSize.width + " x " + bestSize.height + " px");
+			LOG.debug("{} x {} px", bestSize.width, bestSize.height);
 		} else {
 			// Fehlermeldung zurückgeben
 			String error = "Fehler: Auflösung zu hoch!";
@@ -619,7 +615,7 @@ public class CamFragment extends Fragment
 		super.onResume();
 		Intent i = getActivity().getIntent();
 		this.maxPictures = i.getIntExtra("maxPictures", maxPictures);
-		LOG.debug("onResume() maxPictures = " + maxPictures);
+		LOG.debug("onResume() maxPictures = {}", maxPictures);
 		if (camera == null) {
 			camera = getCameraInstance();
 			if (preview != null && preview.getCamera() == null) {
@@ -635,11 +631,11 @@ public class CamFragment extends Fragment
 			c = Camera.open();
 		} catch (Exception ex) {
 			// Camera in use or does not exist
-			LOG.debug("Error: keine Kamera bekommen: " + ex);
+			LOG.debug("Error: keine Kamera bekommen", ex);
 		}
 		if (c != null) {
 			LOG.debug("camera opened");
-			LOG.debug("Camera = " + c.toString());
+			LOG.debug("Camera = {}", c);
 		}
 		return c;
 	}
@@ -654,7 +650,7 @@ public class CamFragment extends Fragment
 		// max. Anzahl Bilder von rufender Activity auslesen
 		this.maxPictures = i.getIntExtra("maxPictures", maxPictures);
 
-		LOG.debug("onCreate() maxPictures = " + maxPictures);
+		LOG.debug("onCreate() maxPictures = {}", maxPictures);
 		this.picturesTaken = 0;
 		this.pictures = new ArrayList<>();
 		camera = getCameraInstance();
@@ -761,8 +757,7 @@ public class CamFragment extends Fragment
 			Intent intent = new Intent(Intent.ACTION_VIEW,
 			    Uri.parse("http://www.evosec.de/datenschutz"));
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			((Button) getView().findViewById(R.id.privacy))
-			    .setVisibility(View.INVISIBLE);
+			getView().findViewById(R.id.privacy).setVisibility(View.INVISIBLE);
 			startActivity(intent);
 		}
 
