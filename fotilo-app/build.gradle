@@ -18,8 +18,8 @@ android {
             storeFile file("keystore.jks")
             keyAlias "fotilo"
 
-            storePassword project.property("signing.storepass")
-            keyPassword project.property("signing.keypass")
+            storePassword project.findProperty("signing.storepass")
+            keyPassword project.findProperty("signing.keypass")
         }
     }
 
