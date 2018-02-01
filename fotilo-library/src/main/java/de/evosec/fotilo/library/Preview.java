@@ -1,4 +1,4 @@
-package de.evosec.fotilo;
+package de.evosec.fotilo.library;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -57,7 +57,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
 				camera.autoFocus(autoFocusCallback);
 			}
 		} catch (IOException e) {
-			LOG.debug("Error setting camera preview: " + e);
+			LOG.debug("Error setting camera preview", e);
 		}
 	}
 
@@ -116,7 +116,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
 			camera.setPreviewDisplay(holder);
 			camera.startPreview();
 		} catch (IOException e) {
-			LOG.debug("Error setting camera preview: " + e);
+			LOG.debug("Error setting camera preview", e);
 		}
 	}
 
@@ -137,8 +137,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
 
 			camera.autoFocus(autoFocusCallback);
 		} catch (Exception e) {
-			LOG.debug("" + e);
-			LOG.debug("Autofokus nicht möglich");
+			LOG.debug("Autofokus nicht möglich", e);
 		}
 	}
 

@@ -1,4 +1,4 @@
-package de.evosec.fotilo;
+package de.evosec.fotilo.library;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +11,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 
 public class ReviewPicturesActivity extends Activity
         implements View.OnClickListener {
@@ -35,15 +31,14 @@ public class ReviewPicturesActivity extends Activity
 		setContentView(R.layout.activity_review_pictures);
 		Bundle bundle = getIntent().getBundleExtra("data");
 		pictureUris = bundle.getStringArrayList("pictures");
-		final RecyclerView pictureGrid =
-		        (RecyclerView) findViewById(R.id.recycler_view);
+		final RecyclerView pictureGrid = findViewById(R.id.recycler_view);
 		pictureGrid.setHasFixedSize(true);
 		RecyclerView.LayoutManager layoutManager =
 		        new GridLayoutManager(getApplicationContext(), 4);
 		pictureGrid.setLayoutManager(layoutManager);
-		Button btnDelete = (Button) findViewById(R.id.btn_delete);
-		Button btnOk = (Button) findViewById(R.id.btn_ok);
-		Button btnFertig = (Button) findViewById(R.id.btn_done);
+		Button btnDelete = findViewById(R.id.btn_delete);
+		Button btnOk = findViewById(R.id.btn_ok);
+		Button btnFertig = findViewById(R.id.btn_done);
 		btnDelete.setOnClickListener(this);
 		btnOk.setOnClickListener(this);
 		btnFertig.setOnClickListener(this);
@@ -53,29 +48,21 @@ public class ReviewPicturesActivity extends Activity
 
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.btn_delete:
+
+		if (v.getId() == R.id.btn_delete) {
 			deletePictures();
-			break;
-		case R.id.btn_ok:
+		} else if (v.getId() == R.id.btn_ok) {
 			returnPictures(Activity.RESULT_OK);
-			break;
-		case R.id.btn_done:
+		} else if (v.getId() == R.id.btn_done) {
 			returnPictures(Activity.RESULT_FIRST_USER);
-			break;
-		default:
-			break;
 		}
+
 	}
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		switch (keyCode) {
-		case KeyEvent.KEYCODE_BACK:
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			returnPictures(Activity.RESULT_OK);
-			break;
-		default:
-			break;
 		}
 		return super.onKeyDown(keyCode, event);
 	}
@@ -92,7 +79,7 @@ public class ReviewPicturesActivity extends Activity
 	private void deletePictures() {
 		List<String> selectedPictureUris = imageAdapter.getSelectedUris();
 		for (String uri : selectedPictureUris) {
-			LOG.debug("Picture deleted: " + uri);
+			LOG.debug("Picture deleted: {}", uri);
 			getContentResolver().delete(Uri.parse(uri), null, null);
 		}
 		this.pictureUris.removeAll(selectedPictureUris);
