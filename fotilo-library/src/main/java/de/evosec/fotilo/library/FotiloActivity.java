@@ -18,13 +18,13 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
-public class FotiloActivity extends AppCompatActivity
+public class FotiloActivity extends FragmentActivity
         implements SensorEventListener {
 
 	private static final Logger LOG =
