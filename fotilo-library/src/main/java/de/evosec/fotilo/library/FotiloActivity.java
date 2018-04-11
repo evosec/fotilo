@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -40,6 +41,10 @@ public class FotiloActivity extends FragmentActivity
 		super.onCreate(savedInstanceState);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 		    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		ActionBar actionBar = getActionBar();
+		if (actionBar != null) {
+			actionBar.hide();
+		}
 		setContentView(R.layout.activity_main);
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		sensorManager.registerListener(this,
