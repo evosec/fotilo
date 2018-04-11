@@ -22,6 +22,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 public class FotiloActivity extends FragmentActivity
@@ -37,6 +38,8 @@ public class FotiloActivity extends FragmentActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+		    WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_main);
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		sensorManager.registerListener(this,
@@ -129,6 +132,9 @@ public class FotiloActivity extends FragmentActivity
 							    case DialogInterface.BUTTON_NEGATIVE:
 								    // proceed with logic by disabling the
 								    // related features or quit the app.
+								    getWindow().setFlags(
+								        WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,
+								        WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 								    finish();
 								    break;
 							    default:
@@ -145,6 +151,9 @@ public class FotiloActivity extends FragmentActivity
 					    .show();
 					// proceed with logic by disabling the related features
 					// or quit the app.
+					getWindow().setFlags(
+					    WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,
+					    WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 					finish();
 				}
 			}
