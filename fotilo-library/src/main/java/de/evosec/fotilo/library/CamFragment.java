@@ -39,6 +39,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -162,8 +163,15 @@ public class CamFragment extends Fragment
 		if (picturesTaken == maxPictures) {
 			LOG.debug("maxPictures erreicht");
 			getActivity().setResult(Activity.RESULT_OK, resultIntent);
-			getActivity().finish();
+			finishActivity();
 		}
+	}
+
+	private void finishActivity() {
+		getActivity().getWindow().setFlags(
+		    WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,
+		    WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+		getActivity().finish();
 	}
 
 	private void displayPicturesTaken() {
@@ -336,7 +344,7 @@ public class CamFragment extends Fragment
 				resultBundle.putString("error", error);
 				resultIntent.putExtra("data", resultBundle);
 				getActivity().setResult(Activity.RESULT_CANCELED, resultIntent);
-				getActivity().finish();
+				finishActivity();
 				return;
 			}
 			configurePictureSize(bestSize, params);
@@ -470,7 +478,7 @@ public class CamFragment extends Fragment
 			resultBundle.putString("error", error);
 			resultIntent.putExtra("data", resultBundle);
 			getActivity().setResult(Activity.RESULT_CANCELED, resultIntent);
-			getActivity().finish();
+			finishActivity();
 		}
 	}
 
@@ -495,7 +503,7 @@ public class CamFragment extends Fragment
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			resultIntent.putExtra("data", resultBundle);
 			getActivity().setResult(Activity.RESULT_CANCELED, resultIntent);
-			getActivity().finish();
+			finishActivity();
 		} else if (keyCode == KeyEvent.KEYCODE_CAMERA) {
 			if (safeToTakePicture) {
 				takePicture();
@@ -807,7 +815,7 @@ public class CamFragment extends Fragment
 			if (resultCode == Activity.RESULT_FIRST_USER) {
 				resultIntent.putExtra("data", resultBundle);
 				getActivity().setResult(Activity.RESULT_CANCELED, resultIntent);
-				getActivity().finish();
+				finishActivity();
 			}
 		}
 	}
