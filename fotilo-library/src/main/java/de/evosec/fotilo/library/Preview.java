@@ -32,9 +32,6 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
 
 		        @Override
 		        public void onAutoFocus(boolean success, Camera camera) {
-			        if (success) {
-				        camera.cancelAutoFocus();
-			        }
 		        }
 	        };
 
@@ -127,6 +124,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
 
 	public void doTouchFocus(final Rect tfocusRect) {
 		try {
+			camera.cancelAutoFocus();
 			List<Area> focusList = new ArrayList<>();
 			Area focusArea = new Area(tfocusRect, 1000);
 			focusList.add(focusArea);
